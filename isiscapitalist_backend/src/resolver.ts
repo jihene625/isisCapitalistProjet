@@ -2,6 +2,7 @@ import { origworld } from './origworld';
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { AppService } from './app.service';
 import { Palier } from './graphql';
+
 @Resolver('World')
 export class GraphQlResolver {
 constructor(private service: AppService) {}
@@ -54,5 +55,60 @@ async acheterQtProduit(
      // Retourner le produit mis à jour
      return product;
    }
+
+  @Mutation()
+  async lancerProductionProduit(
+    @Args('user') user: string,
+    @Args('id') id: number,
+  ) {
+    const world = this.service.readUserWorld(user);
+
+    // Trouver le produit correspondant à l'id
+    const product = world.products.find((p) => p.id === id);
+
+    // Si le produit n'existe pas, lever une erreur
+    if (!product) {
+      throw new Error(`Le produit avec l'id ${id} n'existe pas`);
+    }
+
+    // Démarrer la production en mettant à jour `timeleft`
+    product.timeleft = product.vitesse;
+
+    // Sauvegarder le monde mis à jour
+    this.service.saveWorld(user, world);
+
+    // Retourner le produit mis à jour
+    return product;
+  }
+
+  @Mutation()
+  async engagerManager(
+    @Args('user') user: string,
+    @Args('name') name: string
+  ) {
+
+    const world = this.service.readUserWorld(user);
+
+    // Trouver le manager correspondant
+    const manager = world.managers.find((m) => m.name === name);
+    if (!manager) {
+      throw new Error(`Le manager avec le nom "${name}" n'existe pas.`);
+    }
+
+    // Trouver le produit correspondant au manager
+    const product = world.products.find((p) => p.id === manager.idcible);
+    if (!product) {
+      throw new Error(`Le produit avec l'id "${manager.idcible}" n'existe pas.`);
+    }
+
+    // Débloquer le manager et le produit
+    manager.unlocked = true;
+    product.managerUnlocked = true;
+
+    // Sauvegarder l'état modifié du monde
+    this.service.saveWorld(user, world);
+
+    return manager;
+  }
 
 }
