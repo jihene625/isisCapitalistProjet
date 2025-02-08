@@ -274,24 +274,24 @@
           "typeratio":"vitesse",
           "unlocked":false
         },
-      {
-        "name":"Robot en pharmacie !",
-        "logo":"icones/robot.jpg",
-        "seuil":50,
-        "idcible":6,
-        "ratio":2,
-        "typeratio":"vitesse",
-        "unlocked":false
-      },
-      {
-        "name":"Zéro erreur !",
-        "logo":"icones/robot.jpg",
-        "seuil":100,
-        "idcible":6,
-        "ratio":2,
-        "typeratio":"vitesse",
-        "unlocked":false
-      },
+        {
+          "name":"Robot en pharmacie !",
+          "logo":"icones/robot.jpg",
+          "seuil":50,
+          "idcible":6,
+          "ratio":2,
+          "typeratio":"vitesse",
+          "unlocked":false
+        },
+        {
+          "name":"Zéro erreur !",
+          "logo":"icones/robot.jpg",
+          "seuil":100,
+          "idcible":6,
+          "ratio":2,
+          "typeratio":"vitesse",
+          "unlocked":false
+        },
         {
           "name":"Cocktail chimique !",
           "logo":"icones/robot.jpg",

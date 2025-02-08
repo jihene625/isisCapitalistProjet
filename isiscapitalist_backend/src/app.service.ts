@@ -1,61 +1,48 @@
 import { Injectable } from '@nestjs/common';
 import * as fs from 'fs';
 import * as path from 'path';
-import {origworld} from './origworld';
-import {World} from './graphql';
-import { Args, Mutation } from '@nestjs/graphql';
+import { origworld } from './origworld';
+import { World, Product, Palier } from './graphql';
 
 @Injectable()
 export class AppService {
   readUserWorld(user: string): World {
-  try {
-  const data = fs.readFileSync(
-  path.join(process.cwd(), 'userworlds/', user + '-world.json'),
-  );
-  return JSON.parse(data.toString());
-  } catch (e: unknown) {
-  console.log((e as Error).message);
-  return origworld;
-  }
+    try {
+      const data = fs.readFileSync(
+        path.join(process.cwd(), 'userworlds/', user + '-world.json'),
+      );
+      return JSON.parse(data.toString());
+    } catch (e: unknown) {
+      console.log((e as Error).message);
+      return origworld;
+    }
   }
   saveWorld(user: string, world: World) {
-  fs.writeFile(
-  path.join(process.cwd(), 'userworlds/', user + '-world.json'),
-  JSON.stringify(world),
-  (err) => {
-  if (err) {
-  console.error(err);
-  throw new Error(`Erreur d'écriture du monde coté serveur`);
-  }
-  },
-  );
+    fs.writeFile(
+      path.join(process.cwd(), 'userworlds/', user + '-world.json'),
+      JSON.stringify(world),
+      (err) => {
+        if (err) {
+          console.error(err);
+          throw new Error(`Erreur d'écriture du monde coté serveur`);
+        }
+      },
+    );
   }
 
-  @Mutation()
-  async acheterQtProduit(
-    @Args('user') user: string,
-    @Args('id') id: number,
-    @Args('quantite') quantite: number,
-  ) {
+  acheterQtProduit(user: string, id: number, quantite: number): Product {
     const world = this.readUserWorld(user);
     // Trouver le produit
     const product = world.products.find((p) => p.id === id);
-    if(!product){
-      throw new Error(`Le produit avec l'id ${id} n'existe pas`)
+    if (!product) {
+      throw new Error(`Le produit avec l'id ${id} n'existe pas`);
     }
 
     // Calculer le coût total de l'achat
-    let totalCost = 0;
-    let currentCost = product.cout;
-
-    for (let i = 0; i < quantite; i++) {
-      totalCost += currentCost;
-      currentCost *= product.croissance; // Appliquer l'augmentation du coût pour chaque unité
-      currentCost=Math.round(currentCost*100)/100;
-    }
+    const prix =product.cout * ((1 - Math.pow(product.croissance, quantite)) / (1 - product.croissance));
 
     // Vérifier si l'utilisateur a assez d'argent
-    if (world.money < totalCost) {
+    if (world.money < prix) {
       throw new Error("Pas assez d'argent pour cet achat.");
     }
 
@@ -63,10 +50,10 @@ export class AppService {
     product.quantite += quantite;
 
     // Déduire l'argent du monde
-    world.money -= totalCost;
+    world.money -= prix;
 
     // Mettre à jour le coût d'achat du produit pour la prochaine unité
-    product.cout = currentCost;
+    product.cout = product.cout * Math.pow(product.croissance, quantite);
 
     // Sauvegarder le monde
     this.saveWorld(user, world);
@@ -75,11 +62,7 @@ export class AppService {
     return product;
   }
 
-  @Mutation()
-  async lancerProductionProduit(
-    @Args('user') user: string,
-    @Args('id') id: number,
-  ) {
+  lancerProductionProduit(user: string, id: number) : Product{
     const world = this.readUserWorld(user);
 
     // Trouver le produit correspondant à l'id
@@ -100,24 +83,21 @@ export class AppService {
     return product;
   }
 
-  @Mutation()
-  async engagerManager(
-    @Args('user') user: string,
-    @Args('name') name: string
-  ) {
-
+  engagerManager(user: string, name: string): Palier {
     const world = this.readUserWorld(user);
 
     // Trouver le manager correspondant
     const manager = world.managers.find((m) => m.name === name);
     if (!manager) {
-      throw new Error(`Le manager avec le nom "${name}" n'existe pas.`);
+      throw new Error(`Le manager avec le nom ${name} n'existe pas.`);
     }
 
     // Trouver le produit correspondant au manager
     const product = world.products.find((p) => p.id === manager.idcible);
     if (!product) {
-      throw new Error(`Le produit avec l'id "${manager.idcible}" n'existe pas.`);
+      throw new Error(
+        `Le produit avec l'id ${manager.idcible} de manager avec le nom ${name} n'existe pas.`,
+      );
     }
 
     // Débloquer le manager et le produit
