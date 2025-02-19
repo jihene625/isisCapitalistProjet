@@ -11,7 +11,6 @@ export class GraphQlResolver {
     const world = this.service.readUserWorld(user);
     this.service.updateWorld(world);
     this.service.saveWorld(user, world);
-    console.log(world.lastupdate)
     return world;
   }
   @Mutation()

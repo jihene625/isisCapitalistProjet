@@ -132,18 +132,24 @@ export class AppService {
     const elapseTime = currentTime - world.lastupdate;
     world.lastupdate = currentTime;
 
+
     world.products.forEach((product) => {
       if (product.managerUnlocked == false) {
-        if (product.timeleft > 0 && product.timeleft <= elapseTime) {
+        if (product.timeleft > 0) {
+        if(product.timeleft <= elapseTime){
           world.money += product.revenu * product.quantite;
           world.score += product.revenu * product.quantite;
           product.timeleft = 0;
         } else {
           product.timeleft -= elapseTime;
         }
-      } else {
+      }
+      }
+       else {
         let nbProduction = 1 + Math.floor((elapseTime - product.timeleft) / product.vitesse);
+        console.log(nbProduction)
         const remainingTime = (elapseTime - product.timeleft) % product.vitesse;
+        console.log(remainingTime)
         world.money += nbProduction * product.revenu * product.quantite;
         world.score += nbProduction * product.revenu * product.quantite;
         product.timeleft = product.vitesse - remainingTime;
@@ -152,6 +158,8 @@ export class AppService {
       }
 
     });
+
+
 
 
   }
