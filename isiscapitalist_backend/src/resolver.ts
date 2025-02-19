@@ -9,7 +9,9 @@ export class GraphQlResolver {
   @Query()
   async getWorld(@Args('user') user: string) {
     const world = this.service.readUserWorld(user);
+    this.service.updateWorld(world);
     this.service.saveWorld(user, world);
+    console.log(world.lastupdate)
     return world;
   }
   @Mutation()

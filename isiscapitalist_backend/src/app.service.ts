@@ -32,6 +32,7 @@ export class AppService {
 
   acheterQtProduit(user: string, id: number, quantite: number): Product {
     const world = this.readUserWorld(user);
+
     // Trouver le produit
     const product = world.products.find((p) => p.id === id);
     if (!product) {
@@ -39,7 +40,7 @@ export class AppService {
     }
 
     // Calculer le coût total de l'achat
-    const prix =product.cout * ((1 - Math.pow(product.croissance, quantite)) / (1 - product.croissance));
+    const prix = product.cout * ((1 - Math.pow(product.croissance, quantite)) / (1 - product.croissance));
 
     // Vérifier si l'utilisateur a assez d'argent
     if (world.money < prix) {
@@ -62,8 +63,10 @@ export class AppService {
     return product;
   }
 
-  lancerProductionProduit(user: string, id: number) : Product{
+  lancerProductionProduit(user: string, id: number): Product {
     const world = this.readUserWorld(user);
+    this.updateWorld(world);
+
 
     // Trouver le produit correspondant à l'id
     const product = world.products.find((p) => p.id === id);
@@ -76,8 +79,16 @@ export class AppService {
     // Démarrer la production en mettant à jour `timeleft`
     product.timeleft = product.vitesse;
 
+
+
+
+
+
+
     // Sauvegarder le monde mis à jour
     this.saveWorld(user, world);
+
+
 
     // Retourner le produit mis à jour
     return product;
@@ -85,6 +96,8 @@ export class AppService {
 
   engagerManager(user: string, name: string): Palier {
     const world = this.readUserWorld(user);
+    this.updateWorld(world);
+
 
     // Trouver le manager correspondant
     const manager = world.managers.find((m) => m.name === name);
@@ -103,10 +116,45 @@ export class AppService {
     // Débloquer le manager et le produit
     manager.unlocked = true;
     product.managerUnlocked = true;
+    world.money-=manager.seuil;
+
+
+
+
 
     // Sauvegarder l'état modifié du monde
     this.saveWorld(user, world);
 
     return manager;
   }
+  updateWorld(world: World) {
+    const currentTime = Date.now();
+    const elapseTime = currentTime - world.lastupdate;
+    world.lastupdate = currentTime;
+
+    world.products.forEach((product) => {
+      if (product.managerUnlocked == false) {
+        if (product.timeleft > 0 && product.timeleft <= elapseTime) {
+          world.money += product.revenu * product.quantite;
+          world.score += product.revenu * product.quantite;
+          product.timeleft = 0;
+        } else {
+          product.timeleft -= elapseTime;
+        }
+      } else {
+        let nbProduction = 1 + Math.floor((elapseTime - product.timeleft) / product.vitesse);
+        const remainingTime = (elapseTime - product.timeleft) % product.vitesse;
+        world.money += nbProduction * product.revenu * product.quantite;
+        world.score += nbProduction * product.revenu * product.quantite;
+        product.timeleft = product.vitesse - remainingTime;
+
+
+      }
+
+    });
+
+
+  }
+
+
 }
