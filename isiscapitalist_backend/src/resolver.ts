@@ -1,11 +1,11 @@
 import { origworld } from './origworld';
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { AppService } from './app.service';
-import { Palier } from './graphql';
+import { Palier ,World} from './graphql';
 
 @Resolver('World')
 export class GraphQlResolver {
-  constructor(private service: AppService) {}
+  constructor(private service: AppService) { }
   @Query()
   async getWorld(@Args('user') user: string) {
     const world = this.service.readUserWorld(user);
@@ -33,5 +33,17 @@ export class GraphQlResolver {
   @Mutation()
   async engagerManager(@Args('user') user: string, @Args('name') name: string) {
     return this.service.engagerManager(user, name);
+  }
+  @Mutation()
+  async acheterCashUpgrade(@Args('user') user: string, @Args('name') name: string) {
+    return this.service.acheterCashUpgrade(user, name);
+  }
+  @Mutation()
+  async acheterAngelUpgrade(@Args('user') user: string, @Args('name') name: string) {
+    return this.service.acheterAngelUpgrade(user, name);
+  }
+  @Mutation()
+  async resetWorld(@Args('user') user: string): Promise<World> {
+    return this.service.worldReset(user);
   }
 }
