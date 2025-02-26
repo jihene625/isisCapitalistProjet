@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Client, fetchExchange } from '@urql/core';
-import { GET_WORLD } from './graphqlrequests';
-import { World } from './models/world.model';
+import { GET_WORLD } from './graphqlRequests';
+import { World , Product , Palier} from './models/world.model';
 
 @Injectable({
   providedIn: 'root',
 })
-export class WebService {
-  server = 'http://localhost:4000/graphql'; // URL de l'API GraphQL
+export class WebserviceService {
+  server = 'http://localhost:3000/graphql'; // URL de l'API GraphQL (Port:3000)
   user = 'toto'; // Nom temporaire du joueur
 
   createClient(): Client {
