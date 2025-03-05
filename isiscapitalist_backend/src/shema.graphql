@@ -19,12 +19,13 @@ type Product {
   cout: Float!
   croissance: Float!
   revenu: Float!
-  vitesse: Int!
+  vitesse: Float!
   quantite: Int!
-  timeleft: Int!
+  timeleft: Float!
   managerUnlocked: Boolean!
   paliers: [Palier!]!
 }
+
 type World {
   name: String!
   logo: String!
@@ -33,7 +34,7 @@ type World {
   totalangels: Int!
   activeangels: Int!
   angelbonus: Int!
-  lastupdate: Int!
+  lastupdate: Float!
   products: [Product!]!
   allunlocks: [Palier!]!
   upgrades: [Palier!]!

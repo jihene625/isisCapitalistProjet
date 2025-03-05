@@ -1,0 +1,24 @@
+<div class="login-screen">
+  <div class="blue-square">
+    <div class="pink-box">
+      <!-- Conteneur de la photo qui dépasse en haut -->
+      <div class="photo-container">
+        <img src="assets/Cashh.png" class="profile-photo" />
+      </div>
+      <!-- Titre et champ de saisie dans le carré rose -->
+      <h1 class="title">
+        ENTER YOUR <br> NAME
+      </h1>
+      <div class="input-container">
+        <input
+          type="text"
+          placeholder="Your name"
+          [(ngModel)]="username"
+          class="username-input"
+        />
+      </div>
+    </div>
+    <!-- Bouton ENTER positionné entre le carré rose et le carré bleu -->
+    <button class="enter-button" (click)="onEnter()">ENTER</button>
+  </div>
+</div>

@@ -8,7 +8,7 @@ import { World , Product , Palier} from './models/world.model';
 })
 export class WebserviceService {
   server = 'http://localhost:3000/graphql'; // URL de l'API GraphQL (Port:3000)
-  user = 'toto'; // Nom temporaire du joueur
+  user = 'amine'; // Nom temporaire du joueur
 
   createClient(): Client {
     return new Client({

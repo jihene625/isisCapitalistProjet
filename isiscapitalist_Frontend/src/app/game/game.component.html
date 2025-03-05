@@ -1,0 +1,66 @@
+<div class="game-container">
+  <!-- Menu latéral -->
+  <div class="side-menu">
+    <!-- Couche d'arrière-plan en arc -->
+    <div class="arc-bg"></div>
+
+    <!-- Icône du médecin positionnée au-dessus de l'arc -->
+    <div class="doctor-icon">
+      <img src="assets/Medecin.png" alt="Doctor" class="doctor-image" />
+    </div>
+
+    <!-- Conteneur pour les items (onglets) -->
+    <div class="menu-items">
+      <div class="menu-item unlocks">
+        <img src="assets/Unlocks.png" alt="Unlock" class="menu-icon-unlock" />
+        <span>UNLOCKS</span>
+      </div>
+      <div class="menu-item upgrades">
+        <img src="assets/upgrade.png" alt="Upgrades" class="menu-icon" />
+        <span>UPGRADES</span>
+      </div>
+      <div class="menu-item managers">
+        <img src="assets/Manager.png" alt="Managers" class="menu-icon" />
+        <span>MANAGERS</span>
+      </div>
+      <div class="menu-item investors">
+        <img src="assets/Investors.png" alt="Investors" class="menu-icon" />
+        <span>INVESTORS</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Zone principale -->
+  <div class="main-area">
+    <!-- Affichage du monde (score, argent, etc.) -->
+    <div class="world-stats" *ngIf="world">
+      <h2>{{ world.name }}</h2>
+      <p>Money: {{ world.money | number:'1.0-2' }}</p>
+      <p>Score: {{ world.score | number:'1.0-2' }}</p>
+    </div>
+
+    <!-- Liste des produits -->
+    <div class="products-grid" *ngIf="world">
+      <div class="product-card" *ngFor="let product of world.products">
+        <!-- Temps restant en haut à gauche -->
+        <div class="product-time">
+          {{ product.timeleft | number:'1.0-2' }}s
+        </div>
+        <!-- Coût/Revenu en haut à droite (flèche) -->
+        <div class="product-cost">
+          {{ product.revenu | number:'1.0-2' }}
+        </div>
+        <!-- Corps principal : icône du produit et quantité -->
+        <div class="product-body">
+          <img [src]="product.logo" alt="{{ product.name }}" class="product-icon" />
+          <div class="product-quantity">x{{ product.quantite }}</div>
+        </div>
+        <!-- Zone d'achat en bas -->
+        <div class="product-buy">
+          BUY x1 <br />
+          {{ product.cout | number:'1.0-2' }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

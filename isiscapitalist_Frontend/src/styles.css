@@ -1,1 +1,19 @@
-/* You can add global styles to this file, and also import other style files */
+/* src/styles.css */
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+/* Image de fond sur tout le body */
+body {
+  background: url("assets/background.png") no-repeat center center fixed;
+  background-size: cover;
+}
+.container {
+  background-color: rgba(255, 255, 255, 0.8); /* Blanc transparent */
+  padding: 1rem;
+  border-radius: 8px;
+  margin: 1rem;
+}

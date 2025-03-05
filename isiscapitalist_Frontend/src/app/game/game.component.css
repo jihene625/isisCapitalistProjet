@@ -1,0 +1,215 @@
+/* Container global qui occupe tout l'écran */
+.game-container {
+  width: 100vw;
+  height: 100vh;
+  display: flex; /* Aligne le menu latéral et la zone principale */
+  font-family: 'Luckiest Guy', cursive;
+  background: transparent; /* Laisse passer le fond global (si défini ailleurs) */
+  position: relative;      /* Pour placer le side-menu en absolu si besoin */
+}
+
+/* Icône du médecin */
+.doctor-icon {
+  position: absolute;
+  top: 20px;              /* Ajuste cette valeur pour placer l'icône verticalement */
+  left: 40%;              /* Centre horizontalement */
+  transform: translateX(-50%);
+  z-index: 15;            /* Pour qu'elle soit au-dessus de l'arc-bg */
+}
+
+.doctor-image {
+  width: 110px;            /* Ajuste la taille selon ton design */
+  height: auto;
+}
+
+/* Le conteneur global du menu latéral */
+.side-menu {
+  position: absolute; /* ou fixed, selon le besoin */
+  top: 0;
+  left: 0;
+  width: 240px;       /* Largeur du menu */
+  height: 100vh;      /* Occupe toute la hauteur de l'écran */
+  overflow: hidden;   /* Masque ce qui dépasse du clip-path */
+  z-index: 10;        /* Au-dessus du contenu principal */
+  font-family: 'Luckiest Guy', cursive;
+}
+
+/* La couche d'arrière-plan courbée */
+.arc-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 250px;        /* Même largeur que .side-menu */
+  height: 100vh;
+  background: rgba(5, 22, 43, 0.8); /* Couleur semi-transparente */
+  /*
+   * clip-path pour dessiner un arc:
+   * ellipse(80% 120% at 0% 50%)
+   * Ajuste ces valeurs pour modifier la courbe
+   */
+  clip-path: ellipse(80% 90% at 1% 50%);
+}
+
+/* Conteneur des items reste inchangé */
+.menu-items {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 150px; /* Décalage depuis le haut */
+  margin-right: 40px;
+}
+
+/* Chaque menu-item : on le rend position: relative et on ajoute du padding à gauche pour le texte */
+.menu-item {
+  position: relative; /* Pour que l'icône absolue se positionne par rapport à cet élément */
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Centre le texte par défaut */
+  background-color: #05162B;
+  color: white;
+  border-radius: 8px;
+  margin: 20px 0;
+  padding: 0.7rem 0.8rem 0.6rem 0.5rem; /* Ajout d'un padding gauche augmenté pour laisser la place à l'icône */
+  transform-origin: left center; /* Pour l'inclinaison */
+  font-size: 1.2rem;
+  font-weight: bolder;         /* Rends le texte plus bold */
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: transform 0.2s, background-color 0.2s;
+  text-align: center;
+}
+
+/* Déplacement de l'icône : position absolue pour qu'elle dépasse
+   Ici, on suppose une icône de 24px x 24px, on la positionne de sorte que 12px soient hors et 12px à l'intérieur */
+.menu-icon {
+  position: absolute;
+  top: -12px;   /* 12px au-dessus du haut du menu-item */
+  left: -5px;  /* 12px à gauche */
+  width: 30px;
+  height: 30px;
+  margin: 0;    /* On supprime le margin */
+  /* Optionnel : ajouter une bordure pour mieux l'intégrer */
+}
+.menu-icon-unlock {
+  position: absolute;
+  top: -25px;   /* 12px au-dessus du haut du menu-item */
+  left: -10px;  /* 12px à gauche */
+  width: 50px;
+  height: 50px;
+  margin: 0;    /* On supprime le margin */
+  /* Optionnel : ajouter une bordure pour mieux l'intégrer */
+}
+
+/* Pour que le texte ne soit pas collé à l'icône */
+.menu-item span {
+  margin-left: 10px;
+}
+
+/* Survol des onglets */
+.menu-item:hover {
+  background-color: #0A2A4A;
+  transform: scale(1.05);
+}
+
+/* Inclinaison personnalisée pour chaque onglet (exemple identique ici) */
+.unlocks,
+.upgrades,
+.managers,
+.investors {
+  transform: rotate(-10deg);
+}
+
+
+/* Zone principale à droite du menu */
+.main-area {
+  flex: 1;          /* Prend l'espace restant */
+  margin-left: 280px; /* Laisse la place au side-menu */
+  padding: 1rem;
+  overflow-y: auto;
+  color: #fff;
+}
+
+/* Stats du monde */
+.world-stats {
+  margin-bottom: 1rem;
+}
+
+.products-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center; /* Centrer les cartes si tu veux */
+}
+
+.product-card {
+  position: relative;
+  width: 150px;
+  height: 130px;
+  margin: 1rem;
+}
+
+.product-time {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: #05162B;
+  color: #fff;
+  padding: 0.2rem 0.4rem;
+  font-size: 0.8rem;
+  border-bottom-right-radius: 5px;
+}
+
+.product-cost {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: #05162B;
+  color: #fff;
+  padding: 0.2rem 0.6rem;
+  font-size: 0.8rem;
+  clip-path: polygon(30% 0%, 100% 0%, 100% 100%, 0% 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.product-body {
+  position: absolute;
+  top: 20px;
+  left: 0;
+  right: 0;
+  bottom: 25px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3rem;
+}
+
+.product-icon {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+}
+
+.product-quantity {
+  color: #fff;
+  font-size: 0.9rem;
+}
+
+.product-buy {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: #E37098;
+  color: #05162B;
+  text-align: center;
+  font-size: 0.8rem;
+  padding: 0.3rem 0;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  cursor: pointer;
+}
+
