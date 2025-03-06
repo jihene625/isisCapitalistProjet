@@ -81,13 +81,8 @@ export class AppService {
     // Démarrer la production en mettant à jour `timeleft`
     product.timeleft = product.vitesse;
 
-
-
-
     // Sauvegarder le monde mis à jour
     this.saveWorld(user, world);
-
-
 
     // Retourner le produit mis à jour
     return product;
@@ -96,7 +91,6 @@ export class AppService {
   engagerManager(user: string, name: string): Palier {
     const world = this.readUserWorld(user);
     this.updateWorld(world);
-
 
     // Trouver le manager correspondant
     const manager = world.managers.find((m) => m.name === name);

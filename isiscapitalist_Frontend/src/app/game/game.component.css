@@ -4,33 +4,33 @@
   height: 100vh;
   display: flex; /* Aligne le menu latéral et la zone principale */
   font-family: 'Luckiest Guy', cursive;
-  background: transparent; /* Laisse passer le fond global (si défini ailleurs) */
-  position: relative;      /* Pour placer le side-menu en absolu si besoin */
+  background: transparent;
+  position: relative;
 }
 
 /* Icône du médecin */
 .doctor-icon {
   position: absolute;
-  top: 20px;              /* Ajuste cette valeur pour placer l'icône verticalement */
-  left: 40%;              /* Centre horizontalement */
+  top: 20px;
+  left: 40%;
   transform: translateX(-50%);
-  z-index: 15;            /* Pour qu'elle soit au-dessus de l'arc-bg */
+  z-index: 15;
 }
 
 .doctor-image {
-  width: 110px;            /* Ajuste la taille selon ton design */
+  width: 110px;
   height: auto;
 }
 
 /* Le conteneur global du menu latéral */
 .side-menu {
-  position: absolute; /* ou fixed, selon le besoin */
+  position: absolute;
   top: 0;
   left: 0;
-  width: 240px;       /* Largeur du menu */
-  height: 100vh;      /* Occupe toute la hauteur de l'écran */
-  overflow: hidden;   /* Masque ce qui dépasse du clip-path */
-  z-index: 10;        /* Au-dessus du contenu principal */
+  width: 240px;
+  height: 100vh;
+  overflow: hidden;
+  z-index: 10;
   font-family: 'Luckiest Guy', cursive;
 }
 
@@ -39,80 +39,72 @@
   position: absolute;
   top: 0;
   left: 0;
-  width: 250px;        /* Même largeur que .side-menu */
+  width: 250px;
   height: 100vh;
-  background: rgba(5, 22, 43, 0.8); /* Couleur semi-transparente */
-  /*
-   * clip-path pour dessiner un arc:
-   * ellipse(80% 120% at 0% 50%)
-   * Ajuste ces valeurs pour modifier la courbe
-   */
+  background: rgba(5, 22, 43, 0.8);
   clip-path: ellipse(80% 90% at 1% 50%);
 }
 
-/* Conteneur des items reste inchangé */
+/* Conteneur des items du menu */
 .menu-items {
   position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 150px; /* Décalage depuis le haut */
+  margin-top: 150px;
   margin-right: 40px;
 }
 
-/* Chaque menu-item : on le rend position: relative et on ajoute du padding à gauche pour le texte */
+/* Chaque item du menu */
 .menu-item {
-  position: relative; /* Pour que l'icône absolue se positionne par rapport à cet élément */
+  position: relative;
   display: flex;
   align-items: center;
-  justify-content: center; /* Centre le texte par défaut */
+  justify-content: center;
   background-color: #05162B;
   color: white;
   border-radius: 8px;
   margin: 20px 0;
-  padding: 0.7rem 0.8rem 0.6rem 0.5rem; /* Ajout d'un padding gauche augmenté pour laisser la place à l'icône */
-  transform-origin: left center; /* Pour l'inclinaison */
+  padding: 0.7rem 0.8rem 0.6rem 0.5rem;
+  transform-origin: left center;
   font-size: 1.2rem;
-  font-weight: bolder;         /* Rends le texte plus bold */
+  font-weight: bolder;
   text-transform: uppercase;
   cursor: pointer;
   transition: transform 0.2s, background-color 0.2s;
   text-align: center;
 }
 
-/* Déplacement de l'icône : position absolue pour qu'elle dépasse
-   Ici, on suppose une icône de 24px x 24px, on la positionne de sorte que 12px soient hors et 12px à l'intérieur */
+/* Positionnement de l'icône dans le menu */
 .menu-icon {
   position: absolute;
-  top: -12px;   /* 12px au-dessus du haut du menu-item */
-  left: -5px;  /* 12px à gauche */
+  top: -12px;
+  left: -5px;
   width: 30px;
   height: 30px;
-  margin: 0;    /* On supprime le margin */
-  /* Optionnel : ajouter une bordure pour mieux l'intégrer */
+  margin: 0;
 }
 .menu-icon-unlock {
   position: absolute;
-  top: -25px;   /* 12px au-dessus du haut du menu-item */
-  left: -10px;  /* 12px à gauche */
+  top: -25px;
+  left: -10px;
   width: 50px;
   height: 50px;
-  margin: 0;    /* On supprime le margin */
-  /* Optionnel : ajouter une bordure pour mieux l'intégrer */
+  margin: 0;
 }
 
-/* Pour que le texte ne soit pas collé à l'icône */
+/* Espacement entre l'icône et le texte */
 .menu-item span {
   margin-left: 10px;
 }
 
-/* Survol des onglets */
+/* Survol */
 .menu-item:hover {
   background-color: #0A2A4A;
   transform: scale(1.05);
 }
 
-/* Inclinaison personnalisée pour chaque onglet (exemple identique ici) */
+/* Inclinaison des items */
 .unlocks,
 .upgrades,
 .managers,
@@ -120,11 +112,10 @@
   transform: rotate(-10deg);
 }
 
-
-/* Zone principale à droite du menu */
+/* Zone principale */
 .main-area {
-  flex: 1;          /* Prend l'espace restant */
-  margin-left: 280px; /* Laisse la place au side-menu */
+  flex: 1;
+  margin-left: 280px;
   padding: 1rem;
   overflow-y: auto;
   color: #fff;
@@ -135,81 +126,119 @@
   margin-bottom: 1rem;
 }
 
+/* Grille des produits */
 .products-grid {
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
-  justify-content: center; /* Centrer les cartes si tu veux */
+  justify-content: center;
 }
 
+/* Carte d'un produit */
 .product-card {
+  display: flex;            /* Aligne horizontalement */
+  align-items: center;      /* Centre verticalement */
+  background: transparent;
+  border: none;
+  border-radius: 10px;
+  padding: 0.8rem;
+  position: relative;       /* Optionnel, si pas besoin d'absolu */
+}
+
+.product-blue-container {
   position: relative;
-  width: 150px;
-  height: 130px;
-  margin: 1rem;
-}
-
-.product-time {
-  position: absolute;
-  top: 0;
-  left: 0;
-  background: #05162B;
-  color: #fff;
-  padding: 0.2rem 0.4rem;
-  font-size: 0.8rem;
-  border-bottom-right-radius: 5px;
-}
-
-.product-cost {
-  position: absolute;
-  top: 0;
-  right: 0;
-  background: #05162B;
-  color: #fff;
-  padding: 0.2rem 0.6rem;
-  font-size: 0.8rem;
-  clip-path: polygon(30% 0%, 100% 0%, 100% 100%, 0% 100%);
+  background-color: #05162B;
+  border-radius: 15px;
+  width: 120px;
+  height: 100px;
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-right: 1rem;       /* Espace entre le conteneur bleu et le bloc rose */
 }
 
-.product-body {
+/* Barre de progression à l'intérieur de la flèche */
+.time-bubble {
   position: absolute;
-  top: 20px;
+  top: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(230, 230, 230, 0.8); /* Couleur avec transparence */
+  color: #000;
+  border-radius: 10px;
+  padding: 0rem 0.4rem;
+  font-size: 0.8rem;
+  width: 50%;
+  height: 30px;
+
+}
+
+.quantity-bubble {
+  position: absolute;
+  top: 50px;
+  left:6%;
+  transform: translateX(-50%);
+  width: 50%;
+  height: 30px;
+  background-color: #F5F5F5; /* Couleur de fond (gris) */
+  color: #000;
+  border-radius:15px;
+  font-size: 0.9rem;
+  text-align: center;
+  line-height: 30px;   /* Centre verticalement le texte */
+  overflow: hidden;    /* Empêche la barre rose de déborder */
+  position: relative;  /* Permet à .quantity-fill d'être en absolu */
+}
+
+/* La barre rose qui remplit partiellement la bulle */
+.quantity-fill {
+  position: absolute;
+  top: 0;
   left: 0;
-  right: 0;
-  bottom: 25px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 0.3rem;
+  height: 100%;
+  width: 0%; /* Ajustée dynamiquement via [style.width.%] */
+  background-color: #E37098; /* Rose */
+  z-index: 0;               /* Derrière le texte */
+  transition: width 0.2s linear; /* Animation */
+}
+
+/* Le texte (quantité) au-dessus de la barre rose */
+.quantity-bubble span {
+  position: relative;
+  z-index: 1; /* Au-dessus de .quantity-fill */
 }
 
 .product-icon {
-  width: 40px;
-  height: 40px;
+  width: 50px;
+  height: 50px;
   object-fit: contain;
 }
 
-.product-quantity {
-  color: #fff;
-  font-size: 0.9rem;
-}
 
-.product-buy {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  background: #E37098;
+/* Bloc rose BUY à droite du conteneur bleu */
+.product-buy-pink {
+  /* On supprime position: absolute, bottom, left, width: 100% */
+  background-color: #E37098;
   color: #05162B;
-  text-align: center;
+  display: flex;
+  width: 100px;
+  flex-direction: row; /* ou row si tu veux aligner BUY x1 et le coût horizontalement */
+  justify-content: space-between;
+  align-items: center;
   font-size: 0.8rem;
-  padding: 0.3rem 0;
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
+  padding: 0.5rem 1.2rem;
   cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  border-radius: 15px;
+  margin-right: 1rem;
+  margin-top: 4rem;
+  /* Optionnel: largeur fixe */
 }
 
+.buy-left {
+  text-align: left;
+}
+
+.buy-right {
+  text-align: right;
+}
