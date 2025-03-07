@@ -2,7 +2,7 @@ import { RatioType } from './graphql';
 
 export const origworld = {
   name: 'A Nice World 2',
-  logo: 'background.png',
+  logo: 'Medecin.png',
   money: 0,
   score: 0,
   totalangels: 0,
@@ -74,7 +74,7 @@ export const origworld = {
       paliers: [
         {
           name: 'Bloc 2.0 !',
-          logo: 'icones/operation.png',
+          logo: 'operation.png',
           seuil: 25,
           idcible: 2,
           ratio: 2,
@@ -83,7 +83,7 @@ export const origworld = {
         },
         {
           name: 'Pas de panique ! ',
-          logo: 'icones/operation.png',
+          logo: 'operation.png',
           seuil: 50,
           idcible: 2,
           ratio: 2,
@@ -92,7 +92,7 @@ export const origworld = {
         },
         {
           name: 'Chirurgie express ! ',
-          logo: 'icones/operation.png',
+          logo: 'operation.png',
           seuil: 100,
           idcible: 2,
           ratio: 2,
@@ -101,7 +101,7 @@ export const origworld = {
         },
         {
           name: 'Main de maître ! ',
-          logo: 'icones/operation.png',
+          logo: 'operation.png',
           seuil: 200,
           idcible: 2,
           ratio: 3,
@@ -113,7 +113,7 @@ export const origworld = {
     {
           id: 3,
           name: 'Lit médicalisé',
-          logo: 'icones/lit medicalisé.png',
+          logo: 'lit medicalisé.png',
           cout: 720,
           croissance: 1.14,
           revenu: 540,
@@ -124,7 +124,7 @@ export const origworld = {
           paliers: [
             {
               name: 'Réveil zen !',
-              logo: 'icones/lit medicalisé.png',
+              logo: 'lit medicalisé.png',
               seuil: 25,
               idcible: 3,
               ratio: 2,
@@ -133,7 +133,7 @@ export const origworld = {
             },
             {
               name: "Confort suprême !",
-              logo: 'icones/lit medicalisé.png',
+              logo: 'lit medicalisé.png',
               seuil: 50,
               idcible: 3,
               ratio: 2,
@@ -142,7 +142,7 @@ export const origworld = {
             },
             {
               name: "Matelas magique !",
-              logo: 'icones/lit medicalisé.png',
+              logo: 'lit medicalisé.png',
               seuil: 100,
               idcible: 3,
               ratio: 2,
@@ -151,7 +151,7 @@ export const origworld = {
             },
             {
               name: "Soin royal !",
-              logo: 'icones/lit medicalisé.png',
+              logo: 'lit medicalisé.png',
               seuil: 200,
               idcible: 3,
               ratio: 2,
@@ -163,7 +163,7 @@ export const origworld = {
         {
               id: 4,
               name: 'Centrifugeuse',
-              logo: 'icones/laboratoire.png',
+              logo: 'laboratoire.png',
               cout: 8640,
               croissance: 1.13,
               revenu: 4320,
@@ -174,7 +174,7 @@ export const origworld = {
               paliers: [
                 {
                   name: 'Précision atomique !',
-                  logo: 'icones/laboratoire.png',
+                  logo: 'laboratoire.png',
                   seuil: 25,
                   idcible: 4,
                   ratio: 2,
@@ -183,7 +183,7 @@ export const origworld = {
                 },
                 {
                   name: "Fluides en folie !",
-                  logo: 'icones/laboratoire.png',
+                  logo: 'laboratoire.png',
                   seuil: 50,
                   idcible: 4,
                   ratio: 2,
@@ -201,7 +201,7 @@ export const origworld = {
                 },
                 {
                   name: "Tourne à fond !",
-                  logo: 'icones/laboratoire.png',
+                  logo: 'laboratoire.png',
                   seuil: 200,
                   idcible: 4,
                   ratio: 3,
@@ -213,7 +213,7 @@ export const origworld = {
             {
                   id: 5,
                   name: 'Défibrillateur',
-                  logo: 'icones/urgence.png',
+                  logo: 'urgence.png',
                   cout: 103680,
                   croissance: 1.12,
                   revenu: 51840,
@@ -224,7 +224,7 @@ export const origworld = {
                   paliers: [
                     {
                       name: 'Choc de génie !',
-                      logo: 'icones/urgence.png',
+                      logo: 'urgence.png',
                       seuil: 25,
                       idcible: 5,
                       ratio: 2,
@@ -233,7 +233,7 @@ export const origworld = {
                     },
                     {
                       name: "Bip… et ça repart !",
-                      logo: 'icones/urgence.png',
+                      logo: 'urgence.png',
                       seuil: 50,
                       idcible: 5,
                       ratio: 2,
@@ -242,7 +242,7 @@ export const origworld = {
                     },
                     {
                       name: "Sauvetage éclair !",
-                      logo: 'icones/urgence.png',
+                      logo: 'urgence.png',
                       seuil: 100,
                       idcible: 5,
                       ratio: 2,
@@ -251,7 +251,7 @@ export const origworld = {
                     },
                     {
                       name: "Voltage vital !",
-                      logo: 'icones/urgence.png',
+                      logo: 'urgence.png',
                       seuil: 200,
                       idcible: 5,
                       ratio: 3,
@@ -263,7 +263,7 @@ export const origworld = {
                 {
                       id: 6,
                       name: 'robot de préparation',
-                      logo: 'icones/pharmacie.png',
+                      logo: 'pharmacie.png',
                       cout: 1244160,
                       croissance: 1.11,
                       revenu: 622080,
@@ -274,7 +274,7 @@ export const origworld = {
                       paliers: [
                         {
                           name: 'Pilule parfaite !',
-                          logo: 'icones/pharmacie.png',
+                          logo: 'pharmacie.png',
                           seuil: 25,
                           idcible: 1,
                           ratio: 2,
@@ -283,7 +283,7 @@ export const origworld = {
                         },
                         {
                           name: "Robot en pharmacie !",
-                          logo: 'icones/pharmacie.png',
+                          logo: 'pharmacie.png',
                           seuil: 50,
                           idcible: 6,
                           ratio: 2,
@@ -292,7 +292,7 @@ export const origworld = {
                         },
                         {
                           name: "Zéro erreur !",
-                          logo: 'icones/scanner.jpg',
+                          logo: 'pharmacie.png',
                           seuil: 100,
                           idcible: 6,
                           ratio: 2,
@@ -301,7 +301,7 @@ export const origworld = {
                         },
                         {
                           name: "Cocktail chimique !",
-                          logo: 'icones/scanner.jpg',
+                          logo: 'pharmacie.png',
                           seuil: 200,
                           idcible: 6,
                           ratio: 3,

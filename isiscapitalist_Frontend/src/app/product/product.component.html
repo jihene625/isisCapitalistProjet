@@ -1,1 +1,43 @@
-<p>product works!</p>
+<!-- Liste des produits -->
+<div class="products-grid" *ngIf="world">
+  <div class="product-card" *ngFor="let product of world.products">
+
+    <!-- 1) Conteneur bleu arrondi -->
+    <div class="product-blue-container">
+      <!-- Bulle de temps en haut (format 00.00.00) -->
+      <div class="time-bubble">
+        {{formatTime(product.vitesse) }}
+      </div>
+
+      <!-- Icône du produit au centre -->
+      <img
+        class="product-icon"
+        [src]="'http://localhost:3000/icones/' + product.logo"
+        alt="{{ product.name }}"
+      />
+
+      <!-- Bulle rose en bas pour la quantité -->
+      <div class="quantity-bubble">
+        <!-- Barre rose partielle, derrière le texte -->
+        <div
+          class="quantity-fill"
+          [style.width.%]="(product.quantite / 50) * 100"
+        ></div>
+
+        <!-- Le texte au-dessus -->
+        <span>{{ product.quantite }}</span>
+      </div>
+    </div>
+
+    <!-- 2) Bloc rose à droite (BUY) -->
+    <div class="product-buy-pink" (click)="buyProduct(product.id)">
+      <div class="buy-left">
+        BUY <br> x1
+      </div>
+      <div class="buy-right">
+        {{ product.cout | number:'1.0-2' }} <br>
+        miles
+      </div>
+    </div>
+  </div>
+</div>
