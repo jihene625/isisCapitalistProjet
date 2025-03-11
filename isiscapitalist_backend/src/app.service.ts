@@ -51,6 +51,7 @@ export class AppService {
     product.cout = product.cout * Math.pow(product.croissance, quantite);
     // Vérification des paliers d'unlock
     this.checkUnlocks(world, product);
+
     this.saveWorld(user, world);
     // Retourner le produit mis à jour
     return product;
@@ -112,13 +113,13 @@ export class AppService {
   }
 
   checkUnlocks(world: World, product: Product) {
-    // specific unlocks
     this.checkProductUnlocks(world, product);
-
-    // allunlocks
     this.checkAllUnlocks(world);
   }
 
+  /**
+   * Vérifie si un produit a atteint un seuil de palier et applique le bonus si nécessaire.
+   */
   checkProductUnlocks(world: World, product: Product) {
     product.paliers.forEach(palier => {
       if (!palier.unlocked && product.quantite >= palier.seuil) {
@@ -128,31 +129,25 @@ export class AppService {
     });
   }
 
+  /**
+   * Vérifie si un allunlock doit être activé lorsque tous les produits atteignent un seuil donné.
+   */
   checkAllUnlocks(world: World) {
-    let productQuantityTotal = 0;
-    world.products.forEach(product => {
-      productQuantityTotal += product.quantite;
-    })
-
     world.allunlocks.forEach(palier => {
-      if (!palier.unlocked && productQuantityTotal >= palier.seuil) {
+      if (!palier.unlocked && world.products.every(p => p.quantite >= palier.seuil)) {
         palier.unlocked = true;
         this.applyBonus(world, palier);
       }
     });
-
   }
 
   applyBonus(world: World, palier: Palier) {
     if (palier.idcible > 0) {
-      let product = world.products.find((p) => p.id === palier.idcible);
-      if (!product) {
-        throw new Error(`Le produit avec l'id ${palier.idcible} n'existe pas`);
+      let product = world.products.find(p => p.id === palier.idcible);
+      if (product) {
+        this.applyBonusForProduct(world, product, palier);
       }
-      this.applyBonusForProduct(world, product, palier);
-    }
-
-    if (palier.idcible === 0) {
+    } else if (palier.idcible === 0) {
       world.products.forEach(product => {
         this.applyBonusForProduct(world, product, palier);
       });
@@ -165,7 +160,7 @@ export class AppService {
         product.revenu *= palier.ratio;
         break;
       case "vitesse":
-        product.vitesse = Math.round(product.vitesse / palier.ratio);
+        product.vitesse = Math.max(1, Math.floor(product.vitesse / palier.ratio)); // Évite vitesse = 0
         break;
       case "ange":
         world.angelbonus += palier.ratio;
@@ -225,18 +220,18 @@ export class AppService {
     let world = this.readUserWorld(user);
     this.updateWorld(world);
 
-    // Calculate additional angels gained
+    // Calculer le nombre d’anges supplémentaires gagnés
     const additionalAngels = Math.floor(150 * Math.sqrt(world.score / Math.pow(10, 5))) - world.totalangels;
     world.totalangels += additionalAngels;
     world.activeangels += additionalAngels;
 
-    // Preserve score and angel properties
+    // Conserver le score et les propriétés des anges
     const score = world.score;
     const totalangels = world.totalangels;
     const activeangels = world.activeangels;
 
-    // Reset world to its initial state
-    world = <World>origworld;
+    // Réinitialiser le monde à son état initial
+    world = JSON.parse(JSON.stringify(origworld));
     world.score = score;
     world.totalangels = totalangels;
     world.activeangels = activeangels;
@@ -246,42 +241,47 @@ export class AppService {
     return world;
   }
 
-
-
   updateWorld(world: World) {
     const currentTime = Date.now();
-    const elapseTime = currentTime - world.lastupdate;
-    world.lastupdate = currentTime;
+    let elapsedTime = currentTime - world.lastupdate;
 
+    if (elapsedTime <= 0) {
+      return; // Rien à mettre à jour si le temps n'a pas avancé
+    }
 
     world.products.forEach((product) => {
-      if (product.managerUnlocked == false) {
-        if (product.timeleft > 0) {
-          if (product.timeleft <= elapseTime) {
-            world.money += product.revenu * product.quantite * (1 + world.activeangels * (world.angelbonus / 100));
-            world.score += product.revenu * product.quantite * (1 + world.activeangels * (world.angelbonus / 100));
-            product.timeleft = 0;
-          } else {
-            product.timeleft -= elapseTime;
+      if (product.quantite > 0) {
+        if (product.managerUnlocked) {
+          // Gestion automatique avec un manager
+          if (product.timeleft > 0) {
+            elapsedTime += product.vitesse - product.timeleft;
+          }
+
+          const nbProductions = Math.floor(elapsedTime / product.vitesse);
+          product.timeleft = product.vitesse - (elapsedTime % product.vitesse);
+
+          if (nbProductions > 0) {
+            const revenue = nbProductions * product.revenu * product.quantite * (1 + world.activeangels * (world.angelbonus / 100));
+            world.money += revenue;
+            world.score += revenue;
+          }
+        } else {
+          // Gestion manuelle (sans manager)
+          if (product.timeleft > 0) {
+            if (product.timeleft <= elapsedTime) {
+              const revenue = product.revenu * product.quantite * (1 + world.activeangels * (world.angelbonus / 100));
+              world.money += revenue;
+              world.score += revenue;
+              product.timeleft = 0;
+            } else {
+              product.timeleft -= elapsedTime;
+            }
           }
         }
       }
-      else {
-        let nbProduction = 1 + Math.floor((elapseTime - product.timeleft) / product.vitesse);
-        console.log(nbProduction)
-        const remainingTime = (elapseTime - product.timeleft) % product.vitesse;
-        console.log(remainingTime)
-        world.money += nbProduction * product.revenu * product.quantite * (1 + world.activeangels * (world.angelbonus / 100));
-        world.score += nbProduction * product.revenu * product.quantite * (1 + world.activeangels * (world.angelbonus / 100));
-        product.timeleft = product.vitesse - remainingTime;
-
-      }
-
     });
 
-
+    world.lastupdate = currentTime;
   }
-
-
 
 }
