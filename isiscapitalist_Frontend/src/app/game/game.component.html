@@ -1,12 +1,16 @@
 <div class="game-container">
+  <!-- Bouton multiplicateur en haut à droite -->
+  <div class="buy-multiplier-button" (click)="toggleQtmulti()">
+    {{ qtmulti }}
+  </div>
   <!-- Menu latéral -->
   <div class="side-menu">
     <div class="arc-bg"></div>
     <div class="doctor-icon">
-      <img class="doctor-image" [src]="'http://localhost:3000/icones/'+ world?.logo" alt="Doctor"/>
+      <img class="doctor-image" [src]="'http://localhost:3000/icones/' + world?.logo" alt="Doctor"/>
     </div>
     <div class="menu-items">
-      <div class="menu-item unlocks">
+      <div class="menu-item unlocks" (click)="toggleUnlocks()">
         <img src="assets/Unlocks.png" alt="Unlock" class="menu-icon-unlock" />
         <span>UNLOCKS</span>
       </div>
@@ -28,11 +32,39 @@
   <!-- Zone principale -->
   <div class="main-area">
     <div class="world-stats" *ngIf="world">
-      <p> {{ world.name }}</p>
+      <p>{{ world.name }}</p>
       <p>Money: {{ world.money | number:'1.0-2' }}</p>
     </div>
+
+    <div class="products-grid" *ngIf="world">
+      <app-product
+        *ngFor="let product of world.products"
+        [product]="product"
+        [qtmulti]="qtmulti"
+        [money]="world.money"
+        (notifyProduction)="onProductionDone($event)"
+        (notifyWorldUpdate)="onWorldUpdate($event)"
+        (notifyBuy)="onBuy($event)"
+      ></app-product>
+    </div>
+
+    <!-- Interface UNLOCKS, affiché si showUnlocks = true -->
+    <app-unlocks
+      *ngIf="showUnlocks && world"
+      [products]="world.products"
+      [allunlocks]="world.allunlocks"
+      (productClicked)="onUnlockProductClicked($event)"
+      (allunlockClicked)="onAllunlockClicked()"
+      (close)="onUnlocksClose()"
+    ></app-unlocks>
   </div>
-  <div><app-product></app-product></div>
 </div>
 
-
+<!-- Interface detail : "Scanner UNLOCKS" etc. -->
+<app-unlock-details
+  *ngIf="showProductDetail"
+  [title]="detailTitle"
+  [paliers]="selectedProductPaliers"
+  (close)="onCloseDetails()"
+>
+</app-unlock-details>

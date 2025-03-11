@@ -1,0 +1,56 @@
+<div class="unlocks-overlay">
+  <!-- 1) Barre bleue en haut -->
+  <div class="unlocks-header">
+    <div class="unlock-icon-container">
+      <img src="assets/Unlocks.png" alt="Unlock" class="unlock-icon" />
+    </div>
+    <div class="unlocks-title">
+      <h2>UNLOCKS</h2>
+    </div>
+    <!-- Exemple: un bouton close si besoin -->
+    <div class="unlocks-close" (click)="closeUnlocks()">
+      <img src="assets/cross.png" alt="Close" />
+    </div>
+  </div>
+
+  <!-- 2) Conteneur #613F3F pour le message en blanc -->
+  <div class="unlocks-message">
+    <p>Want to maximize profits ? Look no further ! <br>
+      GET YOUR INVESTMENTS TO THESE QUOTAS TO UNLOCK SWEET PROFITS BONUSES ! <br>
+      It’s recursiveriffic
+    </p>
+  </div>
+
+  <div class="unlocks-content">
+    <div class="unlocks-grid">
+
+      <!-- Boucle sur produits -->
+      <div class="unlock-card" *ngFor="let product of products" (click)="onCardClick(product)">
+        <div class="unlock-pink">
+          <h4 class="service-name">{{ getServiceName(product) }}</h4>
+          <img [src]="'http://localhost:3000/icones/' + product.logo" class="unlock-product-icon">
+          <p class="unlock-seuil">{{ getThresholdDisplay(product) }}</p>
+        </div>
+        <div class="unlock-bubble">
+          <span class="bubble-product">{{ product.name }}</span>
+          <span class="bubble-bonus">x2</span>
+        </div>
+      </div>
+
+      <!-- Carte supplémentaire pour All Unlock -->
+      <div class="unlock-card" (click)="onAllunlockClick()">
+        <div class="unlock-pink">
+          <h4 class="service-name">All Services</h4>
+          <img [src]="'http://localhost:3000/icones/allunlocks.png'" class="unlock-product-icon">
+          <p class="unlock-seuil">x25</p>
+        </div>
+        <div class="unlock-bubble">
+          <span class="bubble-product">All Products</span>
+          <span class="bubble-bonus">x2</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+

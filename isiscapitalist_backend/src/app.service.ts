@@ -32,36 +32,26 @@ export class AppService {
 
   acheterQtProduit(user: string, id: number, quantite: number): Product {
     const world = this.readUserWorld(user);
-
     // Trouver le produit
     const product = world.products.find((p) => p.id === id);
     if (!product) {
       throw new Error(`Le produit avec l'id ${id} n'existe pas`);
     }
-
     // Calculer le coût total de l'achat
     const prix = product.cout * ((1 - Math.pow(product.croissance, quantite)) / (1 - product.croissance));
-
     // Vérifier si l'utilisateur a assez d'argent
     if (world.money < prix) {
       throw new Error("Pas assez d'argent pour cet achat.");
     }
-
     // Augmenter la quantité du produit
     product.quantite += quantite;
-
-
     // Déduire l'argent du monde
     world.money -= prix;
-
     // Mettre à jour le coût d'achat du produit pour la prochaine unité
     product.cout = product.cout * Math.pow(product.croissance, quantite);
-
     // Vérification des paliers d'unlock
     this.checkUnlocks(world, product);
-
     this.saveWorld(user, world);
-
     // Retourner le produit mis à jour
     return product;
   }
@@ -114,7 +104,6 @@ export class AppService {
     manager.unlocked = true;
     product.managerUnlocked = true;
     world.money -= manager.seuil;
-
 
     // Sauvegarder l'état modifié du monde
     this.saveWorld(user, world);

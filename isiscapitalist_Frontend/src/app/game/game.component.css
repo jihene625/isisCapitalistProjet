@@ -126,6 +126,32 @@
   margin-bottom: 1rem;
 }
 
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* Deux colonnes par défaut */
+  grid-auto-rows: auto;                 /* Hauteur automatique des lignes */
+  gap: 1rem;
+}
+
+/* Sur les écrans étroits, on passe à une seule colonne */
+@media (max-width: 600px) {
+  .products-grid {
+    grid-template-columns: 1fr;
+  }
+}
+.buy-multiplier-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: #E37098;
+  color: #05162B;
+  padding: 0.5rem 1rem;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 1.2rem;
+  z-index: 20;
+  font-weight: bolder;
+}
 
 
 

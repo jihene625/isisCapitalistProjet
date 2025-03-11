@@ -1,0 +1,43 @@
+<div class="unlock-details-overlay">
+  <!-- Header -->
+  <div class="unlock-details-header">
+    <div class="unlock-icon-container">
+      <img src="assets/Unlocks.png" alt="Unlock" class="unlock-icon" />
+    </div>
+    <h2 class="unlock-detail-title">{{ title }} ({{ unlockedCount }}/{{ totalCount }})</h2>
+    <div class="details-close" (click)="closeDetails()">
+      <img src="assets/cross.png" alt="Close" />
+    </div>
+  </div>
+
+  <!-- Message -->
+  <div class="unlock-details-message">
+    <p *ngIf="selectedUnlock; else genericMessage">
+      <!-- Affiche le message spécifique de l'unlock sélectionné -->
+      {{ selectedUnlock.name }}<br>
+      {{ formatPalierMessage(selectedUnlock) }}
+    </p>
+    <ng-template #genericMessage>
+      <p>
+        Want to maximize profits? Look no further! <br>
+        GET YOUR INVESTMENTS TO THESE QUOTAS TO UNLOCK SWEET PROFITS BONUSES! <br>
+        It's recursiveriffic
+      </p>
+    </ng-template>
+  </div>
+
+  <!-- Conteneur principal -->
+  <div class="unlock-details-content">
+    <div class="unlock-details-grid">
+      <!-- Pour chaque palier -->
+      <div class="unlock-card" *ngFor="let pal of paliers" (click)="selectUnlock(pal)">
+        <div class="unlock-pink">
+          <img [src]="'http://localhost:3000/icones/' + pal.logo" alt="{{ pal.name }}" class="unlock-product-icon" />
+          <h4 class="unlock-seuil">x{{ pal.seuil }}</h4>
+          <p *ngIf="pal.unlocked">Unlocked!</p>
+          <p *ngIf="!pal.unlocked">Locked...</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

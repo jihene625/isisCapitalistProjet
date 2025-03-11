@@ -1,0 +1,174 @@
+.unlocks-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(245,245,245,0.2); /* Overlay sombre */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start; /* Laisser un peu de place pour le header */
+  z-index: 999;
+}
+
+.unlocks-header {
+  background-color: #071C39;
+  width: 50%;
+  height: 60px;
+  margin-top: 1rem;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  /* Au lieu de height fixe, on réduit simplement le padding */
+  padding: 0.3rem 0.5rem;
+  /* Marge négative pour qu'il se chevauche sur l'élément suivant */
+  margin-bottom: -1.5rem;
+  z-index: 10; /* Pour qu'il soit au-dessus */
+  position: relative;
+}
+
+/* L'icône à moitié dedans, moitié dehors */
+.unlock-icon-container {
+  position: absolute;
+  top: -30px; /* Ajuster selon la taille de l'icône */
+  left: 20px; /* Ajuster */
+}
+.unlock-icon {
+  width: 90px; /* Ajuster la taille */
+  height: auto;
+}
+
+.unlocks-title {
+  color: #fff;
+  text-transform: uppercase;
+  font-size: 1.5rem;
+  font-family: 'Luckiest Guy', cursive;
+}
+
+.unlocks-close {
+  position: absolute;
+  right: -15px;        /* Ajustez la position horizontale */
+  top: -10px;          /* Ajustez la position verticale */
+  cursor: pointer;
+  z-index: 9999;
+}
+
+.unlocks-close img {
+  width: 40px;
+  height: 40px;
+}
+
+/* Conteneur #613F3F pour le message */
+.unlocks-message {
+  width: 80%;
+  margin-top: 1rem;
+  background-color: rgba(97, 63, 63, 0.8); /* Couleur avec transparence */
+  color: #fff;
+  border-radius: 10px;
+  text-align: center;
+  font-size: 0.9rem;
+  font-family: 'Luckiest Guy', cursive;
+  margin-bottom: -1.5rem;
+  z-index: 10; /* Pour qu'il soit au-dessus */
+  position: relative;
+}
+
+/* Grand conteneur #071C39 pour afficher chaque unlock */
+.unlocks-content {
+  width: 90%;
+  margin-top: 1rem;
+  background-color: rgba(7, 28, 57, 0.7);
+  border-radius: 10px;
+  padding: 1rem;
+  justify-content: center;
+}
+
+.unlocks-grid {
+  display: grid;
+  flex-wrap: wrap;
+  grid-template-columns: repeat(4, 1fr); /* 4 colonnes */
+  gap: 1rem;
+  justify-content: center;
+}
+
+/* Carte rose */
+.unlock-card {
+  position: relative;
+  width: 140px;
+  height: 180px;
+  cursor: pointer;
+  margin-right: 10px;
+}
+.unlock-pink {
+  background-color: #E37098;
+  width: 100%;
+  height: 140px;
+  border-radius: 15px;
+  border: 3px solid #071C39;
+  color: rgba(0,0,0,0.8);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+
+  padding-top: 5px;
+  gap: 3px;
+}
+
+
+
+.service-name {
+  margin: 0;
+}
+
+.unlock-product-icon {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+}
+
+.unlock-seuil {
+  margin: 0;
+}
+
+
+
+/* Bulle en bas => nom + x2 */
+.unlock-bubble {
+  position: absolute;
+  bottom: 30px;
+  width: 100%;
+  height: 50px; /* légèrement plus grand pour 2 lignes */
+  background-color: #F2BFD1;
+  color: rgba(0,0,0,0.8);
+  border-radius: 15px;
+  border: 2px solid #071C39;
+  text-align: center;
+  left: 52%;
+  transform: translate(-50%, 50%);
+
+  display: flex;
+  flex-direction: column; /* empile product.name puis x2 en colonne */
+  align-items: center;
+  justify-content: center;
+}
+
+.bubble-product {
+  font-weight: bold;
+  margin-top: 2px;
+  font-size: 0.85rem;
+
+}
+
+.bubble-bonus {
+  /* style spécifique "x2" si besoin */
+  font-size: 0.9rem;
+  margin-bottom: 8px;
+  font-weight: bolder;
+}
+
+

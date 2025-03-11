@@ -71,4 +71,29 @@ export const GET_WORLD = gql`
   }
 `;
 
+export const ACHETER_QT_PRODUIT_MUTATION = gql`
+  mutation acheterQtProduit($user: String!, $id: Int!, $quantite: Int!) {
+    acheterQtProduit(user: $user, id: $id, quantite: $quantite) {
+      id
+      name
+      logo
+      cout
+      croissance
+      revenu
+      vitesse
+      quantite
+      timeleft
+      managerUnlocked
+      paliers {
+        name
+        logo
+        seuil
+        idcible
+        ratio
+        typeratio
+        unlocked
+      }
+    }
+  }
+`;
 

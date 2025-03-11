@@ -1,10 +1,3 @@
-/* Grille des produits */
-.products-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-  justify-content: center;
-}
 
 /* Carte d'un produit */
 .product-card {
@@ -13,15 +6,24 @@
   background: transparent;
   border: none;
   border-radius: 10px;
-  padding: 0.8rem;
+  padding: 0.9rem;
   position: relative;       /* Optionnel, si pas besoin d'absolu */
+  width: 300px;             /* Largeur définie */
+  height: 120px;
+  margin-left: 50px;
+}
+
+/* Effet flou pour le produit verrouillé */
+.locked {
+  filter: blur(1px);
+  opacity: 0.6;
 }
 
 .product-blue-container {
   position: relative;
   background-color: #05162B;
   border-radius: 15px;
-  width: 120px;
+  width: 200px;
   height: 100px;
   display: flex;
   align-items: center;
@@ -39,16 +41,16 @@
   color: #000;
   border-radius: 10px;
   padding: 0rem 0.4rem;
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   width: 50%;
   height: 30px;
-
+  text-align: center;
 }
 
 .quantity-bubble {
   position: absolute;
-  top: 50px;
-  left:6%;
+  top: 90px;
+  left:60px;
   transform: translateX(-50%);
   width: 50%;
   height: 30px;
@@ -59,7 +61,7 @@
   text-align: center;
   line-height: 30px;   /* Centre verticalement le texte */
   overflow: hidden;    /* Empêche la barre rose de déborder */
-  position: relative;  /* Permet à .quantity-fill d'être en absolu */
+  position: absolute;  /* Permet à .quantity-fill d'être en absolu */
 }
 
 /* La barre rose qui remplit partiellement la bulle */
@@ -68,7 +70,6 @@
   top: 0;
   left: 0;
   height: 100%;
-  width: 0%; /* Ajustée dynamiquement via [style.width.%] */
   background-color: #E37098; /* Rose */
   z-index: 0;               /* Derrière le texte */
   transition: width 0.2s linear; /* Animation */
@@ -76,14 +77,16 @@
 
 /* Le texte (quantité) au-dessus de la barre rose */
 .quantity-bubble span {
-  position: relative;
+  position: static;
   z-index: 1; /* Au-dessus de .quantity-fill */
 }
 
 .product-icon {
-  width: 50px;
-  height: 50px;
+  width: 80px;   /* taille augmentée */
+  height: 80px;  /* taille augmentée */
   object-fit: contain;
+  display: block;
+  margin: 0px;  /* centre l'image horizontalement */
 }
 
 
@@ -92,12 +95,13 @@
   /* On supprime position: absolute, bottom, left, width: 100% */
   background-color: #E37098;
   color: #05162B;
+  font-weight: bolder;
   display: flex;
-  width: 100px;
+  width: 200px;
   flex-direction: row; /* ou row si tu veux aligner BUY x1 et le coût horizontalement */
   justify-content: space-between;
   align-items: center;
-  font-size: 0.8rem;
+  font-size: 1rem;
   padding: 0.5rem 1.2rem;
   cursor: pointer;
   box-shadow: 0 2px 4px rgba(0,0,0,0.3);
@@ -105,6 +109,13 @@
   margin-right: 1rem;
   margin-top: 4rem;
   /* Optionnel: largeur fixe */
+}
+
+.product-buy-pink.disabled {
+  background-color: #E37098; /* Couleur grisée */
+  color: #05162B;;
+  pointer-events: none;   /* Désactive le clic */
+  opacity: 0.7;
 }
 
 .buy-left {
