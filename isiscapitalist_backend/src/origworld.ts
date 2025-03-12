@@ -118,7 +118,7 @@ export const origworld = {
       croissance: 1.14,
       revenu: 540,
       vitesse: 6000,
-      quantite: 1,
+      quantite: 0,
       timeleft: 0,
       managerUnlocked: false,
       paliers: [
@@ -168,7 +168,7 @@ export const origworld = {
       croissance: 1.13,
       revenu: 4320,
       vitesse: 12000,
-      quantite: 1,
+      quantite: 0,
       timeleft: 0,
       managerUnlocked: false,
       paliers: [

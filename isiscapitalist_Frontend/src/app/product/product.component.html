@@ -1,35 +1,49 @@
 <div class="product-card" [ngClass]="{'locked': locked}" (click)="onProductClick()">
-  <!-- Conteneur bleu arrondi pour l'image, le temps, et la quantité -->
-  <div class="product-blue-container">
-    <div class="time-bubble">
-      {{ formatTime(product.vitesse) }}
-    </div>
-    <img
-      class="product-icon"
-      [src]="'http://localhost:3000/icones/' + product.logo"
-      alt="{{ product.name }}"
-    />
-    <div class="quantity-bubble">
-      <div class="quantity-fill" [style.width.%]="(product.quantite / 50) * 100"></div>
-      <span>{{ product.quantite }}</span>
-    </div>
-  </div>
+  <div class="product-card-content">
 
-  <!-- Conteneur à droite regroupant la barre de progression et le bouton BUY -->
-
-    <!-- Bloc rose BUY -->
-    <div class="product-buy-pink"
-         (click)="buyProduct(product.id); $event.stopPropagation()"
-         [ngClass]="{'disabled': !canBuy()}"
-    >
-      <div class="buy-left">
-        BUY <br>
-        {{ qtmulti === 'Max' ? maxBuyable : qtmulti }}
-      </div>
-      <div class="buy-right">
-        {{ product.cout | number:'1.0-2' }} <br>
-        miles
+    <!-- Colonne gauche : conteneur bleu -->
+    <div class="blue-col">
+      <div class="product-blue-container">
+        <div class="time-bubble">
+          {{ formatTime(product.vitesse) }}
+        </div>
+        <img
+          class="product-icon"
+          [src]="'http://localhost:3000/icones/' + product.logo"
+          alt="{{ product.name }}"
+        />
+        <div class="quantity-bubble">
+          <div class="quantity-fill" [style.width.%]="(product.quantite / 50) * 100"></div>
+          <span>{{ product.quantite }}</span>
+        </div>
       </div>
     </div>
-  </div>
 
+    <!-- Colonne droite : flèche de progression + bloc rose BUY -->
+    <div class="buy-col">
+      <!-- Flèche marron de progression, visible si la production est en cours -->
+      <div class="arrow-progress">
+        <div class="arrow-fill" [style.width.%]="getProgressPercent()"></div>
+        <span class="arrow-text">
+          {{ product.revenu | number:'1.0-2' }}
+        </span>
+      </div>
+
+      <!-- Bloc rose BUY -->
+      <div class="product-buy-pink"
+           (click)="buyProduct(product.id); $event.stopPropagation()"
+           [ngClass]="{'disabled': !canBuy()}"
+      >
+        <div class="buy-left">
+          BUY <br>
+          {{ qtmulti === 'Max' ? maxBuyable : qtmulti }}
+        </div>
+        <div class="buy-right">
+          {{ product.cout | number:'1.0-2' }} <br>
+          miles
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

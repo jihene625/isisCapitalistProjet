@@ -3,6 +3,7 @@ import { WebserviceService } from '../webservice.service';
 import { World, Product } from '../models/world.model';
 import { DecimalPipe, NgForOf, NgIf } from '@angular/common';
 import { CommonModule } from '@angular/common';
+import { MyProgressBarComponent, Orientation } from '../my-progress-bar/my-progress-bar.component';
 
 @Component({
   selector: 'app-product',
@@ -14,10 +15,18 @@ import { CommonModule } from '@angular/common';
     NgIf,
     DecimalPipe,
     CommonModule,
+    MyProgressBarComponent
   ],
 })
 export class ProductComponent implements OnInit {
   @Input() product!: Product; // Le produit transmis par le parent
+
+  // Propriétés pour la barre de progression
+  progressInitialValue: number = 0;
+  progressVitesse: number = this.product ? this.product.vitesse : 500;
+  // progressRun contrôle l'affichage de la barre (true quand la production est active)
+  progressRun: boolean = false;
+  Orientation = Orientation; // Pour utiliser dans le template
 
   // Multiplicateur d'achat (x1, x10, x100, ou Max)
   private _qtmulti!: string;
@@ -39,7 +48,6 @@ export class ProductComponent implements OnInit {
     this._money = value;
     if (this.product && this.qtmulti) {
       this.calcMaxCanBuy();
-      // Pour les produits non débloqués (quantite == 0 et id != 1), verrouiller si l'argent est insuffisant pour 1 exemplaire
       if (this.product.id !== 1 && this.product.quantite === 0) {
         const costOne = this.computeBuyCost(1);
         this.locked = value < costOne;
@@ -52,15 +60,17 @@ export class ProductComponent implements OnInit {
 
   // Quantité maximale achetable calculée
   maxBuyable: number = 0;
-  // Indique si le produit est verrouillé (flouté) – initialement, les produits autres que le premier le sont si non achetés
+  // Indique si le produit est verrouillé (flouté)
   locked: boolean = false;
+  // Temps cumulé pour la production (en ms) qui sert à la barre de progression
+  progressTime: number = 0;
 
   // Événements vers le parent
   @Output() notifyProduction: EventEmitter<{ p: Product; qt: number }> = new EventEmitter();
   @Output() notifyWorldUpdate: EventEmitter<World> = new EventEmitter();
   @Output() notifyBuy: EventEmitter<number> = new EventEmitter();
 
-  // Variables de production
+  // Variables de production pour gérer les intervalles
   productionInProgress: { [id: number]: boolean } = {};
   lastUpdateTimes: { [id: number]: number } = {};
   productionIntervals: { [id: number]: any } = {};
@@ -69,16 +79,17 @@ export class ProductComponent implements OnInit {
 
   ngOnInit(): void {
     // Le premier produit (id === 1) est toujours débloqué.
-    // Pour les autres, si la quantité est 0, le produit doit être verrouillé indépendamment du money.
-    if (this.product.id !== 1 && this.product.quantite === 0) {
-      this.locked = true;
-    } else {
-      this.locked = false;
-    }
+    // Les autres sont verrouillés tant qu'ils n'ont pas été achetés.
+    this.locked = (this.product.id !== 1 && this.product.quantite === 0);
     this.calcMaxCanBuy();
   }
 
-  // Formate le temps (en ms) en HH.MM.SS
+  // Arrête la production et la barre de progression
+  stopProduction(): void {
+    this.progressRun = false;
+  }
+
+  // Formate le temps (en ms) en format HH.MM.SS
   formatTime(time: number): string {
     const totalSeconds = Math.floor(time / 1000);
     const hours = Math.floor(totalSeconds / 3600);
@@ -87,50 +98,70 @@ export class ProductComponent implements OnInit {
     return `${hours.toString().padStart(2, '0')}.${minutes.toString().padStart(2, '0')}.${seconds.toString().padStart(2, '0')}`;
   }
 
-  // Démarre la production sur clic
+  // Méthode déclenchée au clic sur le produit
   onProductClick(): void {
     if (this.locked) {
-      // Si le produit est verrouillé, on vérifie si on a assez d'argent pour acheter 1 exemplaire
+      // Si le produit est verrouillé, tenter d'acheter 1 exemplaire pour le débloquer
       if (this.computeBuyCost(1) <= this.money) {
-        // Acheter 1 exemplaire pour débloquer
         this.buyProduct(this.product.id);
       }
       return;
     }
-    // Si le produit est débloqué, lancer la production
+    // Si la production n'est pas déjà en cours, la démarrer
     if (!this.productionInProgress[this.product.id]) {
       this.startFabrication();
     }
   }
 
+  // Démarre la production et la barre de progression
   startFabrication(): void {
     this.productionInProgress[this.product.id] = true;
     this.lastUpdateTimes[this.product.id] = Date.now();
+    this.progressTime = 0; // Réinitialise la progression
+    // Lance une boucle qui met à jour la progression toutes les 100ms
     this.productionIntervals[this.product.id] = setInterval(() => {
       this.calcScore();
     }, 100);
+    // Démarre l'affichage de la barre
+    this.progressInitialValue = 0;
+    this.progressRun = true;
   }
 
+  // Met à jour la production et la progression
   calcScore(): void {
     const now = Date.now();
     const elapsed = now - this.lastUpdateTimes[this.product.id];
     this.lastUpdateTimes[this.product.id] = now;
-    if (elapsed >= this.product.vitesse) {
+    this.progressTime += elapsed;
+    if (this.progressTime >= this.product.vitesse) {
+      // Forcer la progression à 100%
+      this.progressTime = this.product.vitesse;
+      // Émettre l'événement de production
       const qt = 1;
       this.notifyProduction.emit({ p: this.product, qt: qt });
-      this.stopFabrication();
+      // Attendre un court instant pour que la barre affiche 100% avant de se réinitialiser
+      setTimeout(() => {
+        this.stopFabrication();
+        this.stopProduction();
+      }, 100); // délai de 100 ms (ajustable selon vos besoins)
     }
   }
 
+  // Arrête la production en cours
   stopFabrication(): void {
     this.productionInProgress[this.product.id] = false;
     if (this.productionIntervals[this.product.id]) {
       clearInterval(this.productionIntervals[this.product.id]);
       this.productionIntervals[this.product.id] = null;
     }
+    // Remet la progression à 0
+    this.progressTime = 0;
+    // Désactive l'affichage de la barre
+    this.progressRun = false;
   }
 
-  // Calcule la quantité maximale achetable pour ce produit
+
+  // Calcule la quantité maximale achetable
   calcMaxCanBuy(): void {
     const x = this.product.cout;
     const c = this.product.croissance;
@@ -159,7 +190,7 @@ export class ProductComponent implements OnInit {
     }
   }
 
-  // Renvoie la quantité à acheter selon le multiplicateur
+  // Renvoie la quantité à acheter selon le multiplicateur global
   getQuantiteToBuy(): number {
     if (this.qtmulti === 'Max') {
       return this.maxBuyable;
@@ -179,22 +210,19 @@ export class ProductComponent implements OnInit {
   buyProduct(productId: number): void {
     let quantite: number;
     if (this.locked) {
-      // Si le produit est verrouillé, on force l'achat de 1 exemplaire pour débloquer
       quantite = 1;
     } else {
       quantite = this.getQuantiteToBuy();
     }
-    this.webservice.acheterQtProduit('toto', productId, quantite)
+    this.webservice.acheterQtProduit('user', productId, quantite)
       .then((updatedProduct: Product) => {
         console.log("Produit acheté :", updatedProduct);
         return this.webservice.getWorld();
       })
       .then((newWorld: World) => {
-        // Notifier le parent avec le world mis à jour
         this.notifyWorldUpdate.emit(newWorld);
         const totalCost = this.computeBuyCost(quantite);
         this.notifyBuy.emit(totalCost);
-        // Si le produit était verrouillé, débloquez-le définitivement
         if (this.locked) {
           this.locked = false;
         }
@@ -202,4 +230,11 @@ export class ProductComponent implements OnInit {
       .catch((err: any) => console.error("Erreur lors de l'achat du produit :", err));
   }
 
+  // Calcule le pourcentage de progression (0 à 100) pour la barre
+  getProgressPercent(): number {
+    if (!this.product.vitesse) return 0;
+    const ratio = this.progressTime / this.product.vitesse;
+    const percent = ratio * 100;
+    return Math.max(0, Math.min(100, percent));
+  }
 }
