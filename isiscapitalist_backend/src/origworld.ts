@@ -314,7 +314,7 @@ export const origworld = {
   allunlocks: [
     {
       name: 'All is better than one',
-      logo: 'icones/all.jpg',
+      logo: 'allunlocks.png',
       seuil: 25,
       idcible: 0,
       ratio: 2,
@@ -323,7 +323,7 @@ export const origworld = {
     },
     {
       name: 'To take and not to give',
-      logo: 'icones/all.jpg',
+      logo: 'allunlocks.png',
       seuil: 50,
       idcible: 0,
       ratio: 2,
@@ -332,7 +332,7 @@ export const origworld = {
     },
     {
       name: 'wohooooo !',
-      logo: 'icones/all.jpg',
+      logo: 'allunlocks.png',
       seuil: 100,
       idcible: 0,
       ratio: 2,
@@ -341,7 +341,7 @@ export const origworld = {
     },
     {
       name: 'Universal Capitalist !',
-      logo: 'icones/all.jpg',
+      logo: 'allunlocks.png',
       seuil: 200,
       idcible: 0,
       ratio: 2,

@@ -76,7 +76,6 @@
   text-align: center;
   line-height: 30px;   /* Centre verticalement le texte */
   overflow: hidden;    /* Empêche la barre rose de déborder */
-  position: absolute;  /* Permet à .quantity-fill d'être en absolu */
 }
 
 /* La barre rose qui remplit partiellement la bulle */
@@ -92,8 +91,8 @@
 
 /* Le texte (quantité) au-dessus de la barre rose */
 .quantity-bubble span {
-  position: static;
-  z-index: 1; /* Au-dessus de .quantity-fill */
+  position: relative;
+  z-index: 10; /* Au-dessus de .quantity-fill */
 }
 
 .product-icon {

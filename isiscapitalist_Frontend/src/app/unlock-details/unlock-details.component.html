@@ -29,13 +29,18 @@
   <!-- Conteneur principal -->
   <div class="unlock-details-content">
     <div class="unlock-details-grid">
-      <!-- Pour chaque palier -->
       <div class="unlock-card" *ngFor="let pal of paliers" (click)="selectUnlock(pal)">
-        <div class="unlock-pink">
+        <!-- Carte rose, styles dynamiques selon pal.unlocked -->
+        <div class="unlock-pink" [ngClass]="{'unlocked': pal.unlocked, 'locked': !pal.unlocked}" >
+          <!-- Icône en haut à gauche -->
+          <div class="status-icon">
+            <img *ngIf="pal.unlocked" src="assets/Check.png" alt="Unlocked" />
+            <img *ngIf="!pal.unlocked" src="assets/unlocks.png" alt="Locked" />
+          </div>
+          <!-- Icône du produit/unlock -->
           <img [src]="'http://localhost:3000/icones/' + pal.logo" alt="{{ pal.name }}" class="unlock-product-icon" />
+          <!-- Seuil -->
           <h4 class="unlock-seuil">x{{ pal.seuil }}</h4>
-          <p *ngIf="pal.unlocked">Unlocked!</p>
-          <p *ngIf="!pal.unlocked">Locked...</p>
         </div>
       </div>
     </div>

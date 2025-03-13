@@ -143,7 +143,7 @@ export class ProductComponent implements OnInit {
       setTimeout(() => {
         this.stopFabrication();
         this.stopProduction();
-      }, 100); // délai de 100 ms (ajustable selon vos besoins)
+      }, 90); // délai de 100 ms (ajustable selon vos besoins)
     }
   }
 
@@ -214,6 +214,7 @@ export class ProductComponent implements OnInit {
     } else {
       quantite = this.getQuantiteToBuy();
     }
+    console.log("Tentative d'achat: produit", productId, "quantité", quantite, "money", this.money);
     this.webservice.acheterQtProduit('user', productId, quantite)
       .then((updatedProduct: Product) => {
         console.log("Produit acheté :", updatedProduct);

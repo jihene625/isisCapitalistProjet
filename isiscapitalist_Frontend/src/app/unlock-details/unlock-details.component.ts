@@ -83,4 +83,18 @@ export class UnlockDetailsComponent {
     if (id === 6) return 'robot de préparation';
     return 'Produit inconnu';
   }
+
+  formatPalierEffect(p: Palier): string {
+    switch (p.typeratio) {
+      case 'vitesse':
+        return `Production speed x${p.ratio}`;
+      case 'gain':
+        return `Profit x${p.ratio}`;
+      case 'ange':
+        return `Angel bonus x${p.ratio}`;
+      default:
+        return `Bonus x${p.ratio}`;
+    }
+  }
+
 }

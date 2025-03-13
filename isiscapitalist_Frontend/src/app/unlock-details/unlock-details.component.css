@@ -79,8 +79,9 @@
   margin-top: 1rem;
   background-color: rgba(7, 28, 57, 0.7);
   border-radius: 10px;
-  padding: 1rem;
+  padding: 2rem;
   justify-content: center;
+  height: 100px;
 }
 
 .unlock-details-grid {
@@ -115,6 +116,32 @@
   padding-top: 5px;
   gap: 3px;
 }
+
+/* Styles si le palier n'est pas encore atteint */
+.unlock-pink.locked {
+  opacity: 0.7;
+  border-color: #071C39;
+}
+
+.unlock-pink.unlocked {
+  opacity: 1;
+  border-color: #E37098;
+}
+
+.status-icon {
+  position: absolute;
+  left: -15px; /* Ajustez pour que la moitié soit en dehors */
+  top: 50%;
+  transform: translateY(-50%);
+  width: 30px;
+  height: 30px;
+}
+
+.status-icon img {
+  width: 100%;
+  height: auto;
+}
+
 .unlock-product-icon {
   position: absolute;  /* Permet de sortir de .unlock-pink */
   top: -30px;          /* Déplace l'icône de 30px vers le haut */
@@ -130,5 +157,7 @@
   font-family: 'Luckiest Guy', cursive;
   font-weight: initial;
 }
+
+
 
 
