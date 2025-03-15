@@ -20,7 +20,10 @@
         <span>UPGRADES</span>
       </div>
       <!-- Ajout de l'événement pour ouvrir l'interface Managers -->
-      <div class="menu-item managers" (click)="toggleManagers()">
+      <div class="menu-item managers"
+        (click)="toggleManagers()"
+        [matBadge]="badgeManagers"
+        [matBadgeHidden]="badgeManagers === 0">
         <img src="assets/Manager.png" alt="Managers" class="menu-icon" />
         <span>MANAGERS</span>
       </div>

@@ -8,6 +8,8 @@ import { UnlocksComponent } from '../unlocks/unlocks.component';
 import { UnlockDetailsComponent } from '../unlock-details/unlock-details.component';
 import {ManagersComponent} from '../managers/managers.component';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatButtonModule } from '@angular/material/button';
+import { MatBadgeModule } from '@angular/material/badge';
 @Component({
   selector: 'app-game',
   standalone: true,
@@ -21,7 +23,9 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
     UnlocksComponent,
     UnlockDetailsComponent,
     ManagersComponent,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatButtonModule,
+    MatBadgeModule
   ]
 })
 export class GameComponent implements OnInit {
@@ -105,6 +109,7 @@ export class GameComponent implements OnInit {
       this.world.money += gain;
       this.world.score += gain;
       console.log(`Produit ${message.p.name} produit ${message.qt} fois, gain: ${gain}`);
+      this.updateBadgeManagers();
     }
   }
 
@@ -112,6 +117,7 @@ export class GameComponent implements OnInit {
   onWorldUpdate(newWorld: World): void {
     this.world = newWorld;
     console.log("World mis à jour :", newWorld);
+    this.updateBadgeManagers();
   }
 
   // Permet au composant produit de notifier le coût total pour un achat,
@@ -121,6 +127,7 @@ export class GameComponent implements OnInit {
       this.world.money -= totalCost;
       this.world.score += totalCost;
       console.log("Coût total déduit :", totalCost);
+      this.updateBadgeManagers();
     }
   }
 
@@ -144,6 +151,16 @@ export class GameComponent implements OnInit {
         console.error("Erreur lors de l'engagement du manager :", err);
         this.popMessage("Erreur lors de l'embauche");
       });
+  }
+
+  // Méthode pour mettre à jour le badge des managers
+  updateBadgeManagers(): void {
+    if (!this.world) {
+      this.badgeManagers = 0;
+      return;
+    }
+    // Comptez les managers non engagés dont le coût est inférieur ou égal à l'argent disponible
+    this.badgeManagers = this.world.managers.filter(manager => !manager.unlocked && this.world!.money >= manager.seuil).length;
   }
 
 // Utilisation de Angular Material SnackBar

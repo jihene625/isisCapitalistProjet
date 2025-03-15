@@ -56,7 +56,7 @@
 }
 
 /* Chaque item du menu */
-.menu-item {
+.menu-item  {
   position: relative;
   display: flex;
   align-items: center;
@@ -75,10 +75,12 @@
   text-align: center;
 }
 
+
+
 /* Positionnement de l'icône dans le menu */
 .menu-icon {
   position: absolute;
-  top: -12px;
+  top: -15px;
   left: -5px;
   width: 30px;
   height: 30px;
