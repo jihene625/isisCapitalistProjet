@@ -518,7 +518,7 @@ export const origworld = {
     },
     {
       name: 'Dr. Microscopia',
-      logo: 'medecin_de_laboratoire.png',
+      logo: 'medecin_de_labortoire.png',
       seuil: 10,
       idcible: 4,
       ratio: 0,
@@ -527,7 +527,7 @@ export const origworld = {
     },
     {
       name: 'Dr. LifeSaver',
-      logo: 'icones/lifesaver.jpg',
+      logo: 'urgentiste.png',
       seuil: 150000,
       idcible: 5,
       ratio: 0,
@@ -536,7 +536,7 @@ export const origworld = {
     },
     {
       name: 'Dr. Pill Popper',
-      logo: 'icones/pillpopper.jpg',
+      logo: 'pharmacien.png',
       seuil: 1000000,
       idcible: 6,
       ratio: 0,

@@ -9,7 +9,7 @@ import { ENGAGER_MANAGER } from './graphqlRequests';
 })
 export class WebserviceService {
   server = 'http://localhost:3000/graphql'; // URL de l'API GraphQL (Port:3000)
-  user = 'amine'; // Nom temporaire du joueur
+  user = ''; // Nom temporaire du joueur
 
   createClient(): Client {
     return new Client({
@@ -32,6 +32,7 @@ export class WebserviceService {
 
   // Méthode d'achat du produit
   acheterQtProduit(user: string, id: number, quantite: number): Promise<Product> {
+    console.log("Variables envoyées:", { user, id, quantite });
     return this.createClient()
       .mutation(ACHETER_QT_PRODUIT_MUTATION, { user, id, quantite })
       .toPromise()

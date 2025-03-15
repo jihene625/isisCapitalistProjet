@@ -6,7 +6,7 @@
   "totalangels": 0,
   "activeangels": 0,
   "angelbonus": 2,
-  "lastupdate": 1742057859195,
+  "lastupdate": 1742059503799,
   "products": [
     {
       "id": 1,
@@ -216,7 +216,7 @@
       "croissance": 1.12,
       "revenu": 51840,
       "vitesse": 24000,
-      "quantite": 1,
+      "quantite": 0,
       "timeleft": 0,
       "managerUnlocked": false,
       "paliers": [
@@ -266,7 +266,7 @@
       "croissance": 1.11,
       "revenu": 622080,
       "vitesse": 96000,
-      "quantite": 1,
+      "quantite": 0,
       "timeleft": 0,
       "managerUnlocked": false,
       "paliers": [

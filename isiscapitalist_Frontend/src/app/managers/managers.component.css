@@ -108,16 +108,17 @@
   display: flex;
   align-items: center;   /* Aligne verticalement la carte et le bouton */
   gap: 0rem;            /* Espace horizontal entre la carte et le bouton */
+  margin-top: 10px;
 }
 
 /************************
  * Carte d'un manager
  ************************/
 .manager-card {
-  background-color: #F5F5F5;
+  background-color:rgba(255,255,255,0.8);
   border: 3px solid #071C39;
   border-radius: 15px;
-  width: 400px;
+  width: 300px;
   height: 70px; /* Hauteur réduite */
   display: flex;
   flex-direction: row;
@@ -125,6 +126,8 @@
   padding: 0.2rem 0.5rem;  /* Réduisez le padding */
   gap: 0.5rem;
   box-sizing: content-box;  /* Pour inclure le padding dans la hauteur */
+  position: relative;
+  overflow: visible;
 }
 
 .manager-card-wrapper.locked {
@@ -133,16 +136,21 @@
 }
 
 .manager-photo {
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
+  position: absolute;
+  left: -40px;     /* décale la photo vers la gauche (la moitié de la largeur si vous voulez la moitié dehors) */
+  top: 30%;        /* on centre verticalement */
+  transform: translateY(-50%); /* on ajuste le centrage vertical */
+  width: 100px;     /* largeur voulue */
+  height: 100px;    /* hauteur voulue */
+  border-radius: 0%;
   overflow: hidden;
-  margin-left: 0.5rem;
 }
 
 .manager-photo img {
-  width: 100%;
-  height: auto;
+  width: 100px;
+  height: 120px;
+  object-fit: contain ;
+  margin-left: 10px;
 }
 
 .manager-info {
@@ -156,6 +164,7 @@
   line-height: 0.6; /* Ajuste l'espacement des lignes */
   top: 10px;
   margin-top:10px;
+  margin-left:50px;
 }
 
 .info{
