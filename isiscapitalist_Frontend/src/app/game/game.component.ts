@@ -34,6 +34,7 @@ export class GameComponent implements OnInit {
   selectedProductPaliers: Palier[] = [];
   showManagers: boolean = false;
   badgeManagers: number = 0;
+
   constructor(private webservice: WebserviceService, private snackBar: MatSnackBar) {}
 
   ngOnInit(): void {

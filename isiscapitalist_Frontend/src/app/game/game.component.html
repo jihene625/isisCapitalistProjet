@@ -65,6 +65,7 @@
 <!-- Interface Managers : affichée lorsque showManagers = true -->
 <app-managers
   *ngIf="showManagers && world"
+  [title]="'MANAGERS'"
   [managers]="world.managers"
   [worldMoney]="world.money"
   [products]="world.products"

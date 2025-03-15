@@ -1,92 +1,209 @@
-.modal {
-  position: fixed;
-  z-index: 1000;
-  width: 800px;
-  height: 800px;
-  overflow: auto;
-  background-color: white;
-  border: 2px solid #071C39;
-  top: 10%;
-  left: 20%;
-  padding: 1rem;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-  border-radius: 10px;
-}
-
-.managers-header {
-  text-align: center;
-  margin-bottom: 1rem;
-}
-
-.title {
+/* Conteneur global, similaire à l'overlay de unlocks */
+.managers-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0,0,0,0.5); /* Overlay semi-transparent */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 9999; /* Au-dessus du jeu */
+  padding-top: 2rem; /* Espace en haut */
   font-family: 'Luckiest Guy', cursive;
-  font-size: 2rem;
+}
+
+/* Barre de titre */
+.managers-header {
+  background-color: #071C39;
+  width: 50%;
+  height: 60px;
+  margin-top: 1rem;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  /* Au lieu de height fixe, on réduit simplement le padding */
+  padding: 0.3rem 0.5rem;
+  /* Marge négative pour qu'il se chevauche sur l'élément suivant */
+  margin-bottom: -1.5rem;
+  z-index: 10; /* Pour qu'il soit au-dessus */
+  position: relative;
+}
+
+/* L'icône à moitié dedans, moitié dehors */
+.manager-icon-container {
+  position: absolute;
+  top: -30px; /* Ajuster selon la taille de l'icône */
+  left: 20px; /* Ajuster */
+}
+.manager-icon {
+  width: 80px; /* Ajuster la taille */
+  height: auto;
+}
+
+.managers-title {
+  color: #fff;
   text-transform: uppercase;
-  color: #071C39;
+  font-size: 1.5rem;
+  font-family: 'Luckiest Guy', cursive;
+}
+
+.managers-close {
+  position: absolute;
+  top: -15px; /* Ajustez si besoin */
+  right: -15px;
+  cursor: pointer;
+}
+
+.managers-close img {
+  width: 40px;
+  height: 40px;
+}
+
+/* Petit message sous le titre */
+.managers-message {
+  width: 80%;
+  margin-top: 1rem;
+  background-color: rgba(97, 63, 63, 0.8); /* Couleur avec transparence */
+  color: #fff;
+  border-radius: 10px;
+  text-align: center;
+  font-size: 0.9rem;
+  font-family: 'Luckiest Guy', cursive;
+  margin-bottom: -1.5rem;
+  z-index: 10; /* Pour qu'il soit au-dessus */
+  position: relative;
+}
+.managers-message .first-line {
+  color: #B2BEE1;      /* Couleur du texte */
+  font-size: 1.4rem;   /* Ajustez la taille selon vos préférences */
+  font-weight: bold;   /* Gras (optionnel) */
 }
 
 .managers-content {
+  width: 90%;
+  background-color: rgba(7,28,57,0.6);
+  border-radius: 10px;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+/************************
+ * Grille de managers
+ ************************/
+.manager-grid {
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
   justify-content: center;
 }
 
-.managerslayout {
+.manager-card-wrapper {
+  display: flex;
+  align-items: center;   /* Aligne verticalement la carte et le bouton */
+  gap: 0rem;            /* Espace horizontal entre la carte et le bouton */
+}
+
+/************************
+ * Carte d'un manager
+ ************************/
+.manager-card {
+  background-color: #F5F5F5;
+  border: 3px solid #071C39;
+  border-radius: 15px;
+  width: 400px;
+  height: 70px; /* Hauteur réduite */
   display: flex;
   flex-direction: row;
   align-items: center;
-  background-color: #F5F5F5;
-  border: 2px solid #071C39;
-  border-radius: 10px;
-  padding: 0.5rem;
-  width: 350px;
-  gap: 1rem;
+  padding: 0.2rem 0.5rem;  /* Réduisez le padding */
+  gap: 0.5rem;
+  box-sizing: content-box;  /* Pour inclure le padding dans la hauteur */
 }
 
-.logo {
+.manager-card-wrapper.locked {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.manager-photo {
   width: 60px;
   height: 60px;
   border-radius: 50%;
   overflow: hidden;
+  margin-left: 0.5rem;
 }
 
-.logo img {
+.manager-photo img {
   width: 100%;
   height: auto;
 }
 
 .manager-info {
-  flex: 1;
-  display: flex;
+  display: initial;
   flex-direction: column;
-}
-
-.managername, .managercible, .managercost {
-  font-family: 'Luckiest Guy', cursive;
-  font-size: 1rem;
-}
-
-.hire-button {
-  background-color: #E37098;
+  justify-content: center;
   color: #05162B;
-  padding: 0.5rem 1rem;
-  border-radius: 5px;
-  cursor: pointer;
-  font-weight: bold;
+  flex: 1;
+  overflow: hidden; /* Empêche le débordement */
+  padding: 1.5rem 0.5rem ;
+  line-height: 0.6; /* Ajuste l'espacement des lignes */
+  top: 10px;
+  margin-top:10px;
 }
 
-.hire-button.selectable:hover {
-  background-color: #d36087;
+.info{
+  color:#373333;
 }
 
-.close-button {
-  margin-top: 1rem;
-  padding: 0.5rem 1rem;
+
+.manager-name {
+  margin: 0;
+  font-size: 1.3rem;
+  color: #2F437F; /* Bleu plus foncé pour le nom */
+  font-weight: bolder;
+  top:1rem;
+}
+
+.manager-cost {
   font-size: 1rem;
-  background-color: #071C39;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
+  margin-top: 0.3rem;
+  font-weight: bold;
+
 }
+
+/***************************************
+ * Bouton "HIRE"
+ ***************************************/
+.manager-hire-button {
+  background-color: #E37098; /* rose */
+  color: #071C39;
+  border: 3px solid #071C39;
+  height: 50px;
+  padding: 0.4rem 0.8rem;
+  border-radius: 15px;
+  cursor: pointer;
+  font-weight: bolder;
+  text-align: center;
+  font-size: 1.7rem;
+  transition: transform 0.2s; /* effet hover */
+}
+
+.manager-hire-button:hover {
+  transform: scale(1.05);
+}
+
+.manager-hire-button.can-hire:hover {
+  transform: scale(1.1);
+}
+.manager-hire-button.disabled {
+  opacity: 0.5;
+  pointer-events: none; /* Empêche le clic */
+}
+

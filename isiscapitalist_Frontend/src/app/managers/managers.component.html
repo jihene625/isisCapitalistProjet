@@ -1,26 +1,54 @@
-<div class="modal">
+<div class="managers-overlay">
+  <!-- Barre de titre -->
   <div class="managers-header">
-    <h1 class="title">Managers make you feel better!</h1>
+    <!-- Icône Manager en haut à gauche -->
+    <div class="manager-icon-container">
+      <img src="assets/Manager.png" alt="Manager" class="manager-icon" />
+    </div>
+    <div class="managers-title">
+      <h2>{{ title }}</h2>
+    </div>
+    <!-- Bouton close en haut à droite -->
+    <div class="managers-close" (click)="onClose()">
+      <img src="assets/cross.png" alt="Close" />
+    </div>
   </div>
+
+  <!-- Petit message sous le titre -->
+  <div class="managers-message">
+    <p>
+      <span class="first-line">Managers make life easier!</span><br>
+      Hire one to run your business for you, or to maximize efficiency,<br>
+      all for just one easy payment!
+    </p>
+  </div>
+
+  <!-- Liste des managers -->
   <div class="managers-content">
-    <div *ngFor="let manager of managers">
-      <!-- Afficher uniquement les managers non engagés -->
-      <div *ngIf="!manager.unlocked" class="managerslayout">
-        <div class="logo">
-          <img class="round" [src]="'http://localhost:3000/icones/' + manager.logo" alt="{{ manager.name }}" />
+    <div class="manager-grid">
+      <!-- Pour chaque manager non engagé, on affiche une "carte + bouton" -->
+      <div class="manager-card-wrapper" *ngFor="let manager of managers" [ngClass]="{'locked': manager.unlocked}">
+        <!-- La carte du manager -->
+        <div class="manager-card">
+          <div class="manager-photo">
+            <img [src]="'http://localhost:3000/icones/' + manager.logo" alt="{{ manager.name }}" />
+          </div>
+          <div class="manager-info">
+            <h3 class="manager-name">{{ manager.name }}</h3>
+            <p class="info">Runs the {{ getServiceName(manager.idcible) }} service</p>
+            <p class="manager-cost">{{ manager.seuil | number }}$</p>
+          </div>
         </div>
-        <div class="manager-info">
-          <div class="managername">{{ manager.name }}</div>
-          <div class="managercible">{{ getProductName(manager.idcible) }}</div>
-          <div class="managercost">{{ manager.seuil | number }}</div>
+
+        <!-- Le bouton "HIRE" à côté de la carte -->
+        <div class="manager-hire-button"
+             [class.disabled]="!canHireManager(manager)"
+             (click)="onHire(manager)">
+          HIRE!
         </div>
-        <div class="hire-button"
-             (click)="onHire(manager)"
-             [ngClass]="{'selectable': worldMoney >= manager.seuil}">
-          Hire!
-        </div>
+
       </div>
     </div>
   </div>
-  <button class="close-button" (click)="onClose()">Close</button>
 </div>
+

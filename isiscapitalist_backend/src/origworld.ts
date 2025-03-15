@@ -218,7 +218,7 @@ export const origworld = {
       croissance: 1.12,
       revenu: 51840,
       vitesse: 24000,
-      quantite: 1,
+      quantite: 0,
       timeleft: 0,
       managerUnlocked: false,
       paliers: [
@@ -268,7 +268,7 @@ export const origworld = {
       croissance: 1.11,
       revenu: 622080,
       vitesse: 96000,
-      quantite: 1,
+      quantite: 0,
       timeleft: 0,
       managerUnlocked: false,
       paliers: [
@@ -471,7 +471,7 @@ export const origworld = {
     },
     {
       name: 'Échange de centrifugeuse',
-      logo: 'icones/centrifugeuse.png',
+      logo: 'centrifugeuse.png',
       seuil: 25000000,
       idcible: 4,
       ratio: 10,
@@ -480,7 +480,7 @@ export const origworld = {
     },
     {
       name: 'Échange de lit',
-      logo: 'icones/lit.png',
+      logo: 'lit.png',
       seuil: 250000000,
       idcible: 3,
       ratio: 50,
@@ -491,7 +491,7 @@ export const origworld = {
   managers: [
     {
       name: 'Dr. Bone Scan',
-      logo: 'icones/bonscan.jpg',
+      logo: 'radiologue.png',
       seuil: 10,
       idcible: 1,
       ratio: 0,
@@ -500,7 +500,7 @@ export const origworld = {
     },
     {
       name: 'Dr. Open Hart',
-      logo: 'icones/openhart.jpg',
+      logo: 'chirurgien.png',
       seuil: 15000,
       idcible: 2,
       ratio: 0,
@@ -509,7 +509,7 @@ export const origworld = {
     },
     {
       name: 'Dr. Healy McFix',
-      logo: 'icones/healymcfix.jpg',
+      logo: 'soins.png',
       seuil: 100000,
       idcible: 3,
       ratio: 0,
@@ -518,7 +518,7 @@ export const origworld = {
     },
     {
       name: 'Dr. Microscopia',
-      logo: 'icones/microscopia.jpg',
+      logo: 'medecin_de_laboratoire.png',
       seuil: 10,
       idcible: 4,
       ratio: 0,
