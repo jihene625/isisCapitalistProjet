@@ -6,7 +6,8 @@ import { CommonModule } from '@angular/common';
 import { ProductComponent } from '../product/product.component';
 import { UnlocksComponent } from '../unlocks/unlocks.component';
 import { UnlockDetailsComponent } from '../unlock-details/unlock-details.component';
-
+import {ManagersComponent} from '../managers/managers.component';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-game',
   standalone: true,
@@ -18,11 +19,14 @@ import { UnlockDetailsComponent } from '../unlock-details/unlock-details.compone
     CommonModule,
     ProductComponent,
     UnlocksComponent,
-    UnlockDetailsComponent
-  ],
+    UnlockDetailsComponent,
+    ManagersComponent,
+    MatSnackBarModule
+  ]
 })
 export class GameComponent implements OnInit {
   world: World | null = null;
+  username: string = '';
   qtmulti: string = 'x1';  // Valeur initiale du multiplicateur
   showUnlocks = false;  // Contrôle l’affichage de l’interface Unlocks
   showProductDetail = false;     // vrai => on affiche <app-unlock-details>
@@ -30,11 +34,17 @@ export class GameComponent implements OnInit {
   selectedProductPaliers: Palier[] = [];
   showManagers: boolean = false;
   badgeManagers: number = 0;
-  constructor(private webservice: WebserviceService) {}
+  constructor(private webservice: WebserviceService, private snackBar: MatSnackBar) {}
 
   ngOnInit(): void {
     this.webservice.getWorld()
-      .then(w => this.world = w)
+      .then(w => {
+        this.world = w;
+        // Si votre backend renvoie le pseudo dans world.name ou world.username
+        this.username = w.name; // ou w.username selon votre schéma
+        // Vous pouvez aussi mettre à jour la propriété "user" du service
+        this.webservice.user = this.username;
+      })
       .catch(err => console.error('Erreur lors de la récupération du monde', err));
   }
 

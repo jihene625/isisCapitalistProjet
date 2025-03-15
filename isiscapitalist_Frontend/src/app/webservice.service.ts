@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Client, fetchExchange } from '@urql/core';
 import { GET_WORLD, ACHETER_QT_PRODUIT_MUTATION } from './graphqlRequests';
 import { World, Product, Palier } from './models/world.model';
+import { ENGAGER_MANAGER } from './graphqlRequests';
 
 @Injectable({
   providedIn: 'root',
@@ -40,6 +41,20 @@ export class WebserviceService {
         }
         // On s'assure que la mutation retourne bien un produit
         return response.data.acheterQtProduit as Product;
+      });
+  }
+
+  // Méthode pour engager un manager
+  engagerManager(user: string, name: string): Promise<Palier> {
+    return this.createClient()
+      .mutation(ENGAGER_MANAGER, { user, name })
+      .toPromise()
+      .then(response => {
+        if (response.error) {
+          throw new Error(response.error.message);
+        }
+        // Assurez-vous que la mutation retourne bien un manager (de type Palier)
+        return response.data.engagerManager as Palier;
       });
   }
 }

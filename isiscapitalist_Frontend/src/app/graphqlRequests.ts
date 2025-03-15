@@ -97,3 +97,18 @@ export const ACHETER_QT_PRODUIT_MUTATION = gql`
   }
 `;
 
+export const ENGAGER_MANAGER = gql`
+  mutation engagerManager($user: String!, $name: String!) {
+    engagerManager(user: $user, name: $name) {
+      name
+      logo
+      seuil
+      idcible
+      ratio
+      typeratio
+      unlocked
+    }
+  }
+`;
+
+
