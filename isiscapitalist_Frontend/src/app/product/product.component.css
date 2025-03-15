@@ -20,11 +20,12 @@
   height: 100%;
 }
 
-/* Effet flou pour le produit verrouillé */
+/* Effet de flou pour les produits verrouillés */
 .locked {
   filter: blur(1px);
   opacity: 0.8;
 }
+
 
 /* Colonne gauche : conteneur bleu */
 .blue-col {

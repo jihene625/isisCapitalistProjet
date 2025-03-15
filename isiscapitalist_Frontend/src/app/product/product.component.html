@@ -1,6 +1,5 @@
 <div class="product-card" [ngClass]="{'locked': locked}" (click)="onProductClick()">
   <div class="product-card-content">
-
     <!-- Colonne gauche : conteneur bleu -->
     <div class="blue-col">
       <div class="product-blue-container">
@@ -32,8 +31,7 @@
       <!-- Bloc rose BUY -->
       <div class="product-buy-pink"
            (click)="buyProduct(product.id); $event.stopPropagation()"
-           [ngClass]="{'disabled': !canBuy()}"
-      >
+           [ngClass]="{'disabled': !canBuy()}">
         <div class="buy-left">
           BUY <br>
           {{ qtmulti === 'Max' ? maxBuyable : qtmulti }}
@@ -44,6 +42,5 @@
         </div>
       </div>
     </div>
-
   </div>
 </div>

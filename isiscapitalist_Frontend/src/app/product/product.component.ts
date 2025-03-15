@@ -48,9 +48,8 @@ export class ProductComponent implements OnInit {
     this._money = value;
     if (this.product && this.qtmulti) {
       this.calcMaxCanBuy();
-      if (this.product.id !== 1 && this.product.quantite === 0) {
-        const costOne = this.computeBuyCost(1);
-        this.locked = value < costOne;
+      if (this.product.id !== 1 && this.product.quantite === 0 && !this.unlockedManually) {
+        this.locked = true;
       }
     }
   }
@@ -62,8 +61,12 @@ export class ProductComponent implements OnInit {
   maxBuyable: number = 0;
   // Indique si le produit est verrouillé (flouté)
   locked: boolean = false;
+  // Indique si l'utilisateur a débloqué le produit par un clic explicite
+  unlockedManually: boolean = false;
   // Temps cumulé pour la production (en ms) qui sert à la barre de progression
   progressTime: number = 0;
+  unlockPending: boolean = false;
+
 
   // Événements vers le parent
   @Output() notifyProduction: EventEmitter<{ p: Product; qt: number }> = new EventEmitter();
@@ -101,16 +104,27 @@ export class ProductComponent implements OnInit {
   // Méthode déclenchée au clic sur le produit
   onProductClick(): void {
     if (this.locked) {
-      // Si le produit est verrouillé, tenter d'acheter 1 exemplaire pour le débloquer
+      // Si le produit est verrouillé, on ne le débloque PAS automatiquement,
+      // il faut que l'utilisateur clique pour débloquer.
       if (this.computeBuyCost(1) <= this.money) {
-        this.buyProduct(this.product.id);
+        // Afficher éventuellement un indicateur visuel (ex: "Cliquez pour débloquer")
+         this.unlockProduct();
+      } else {
+        console.log("Pas assez d'argent pour débloquer ce produit");
       }
       return;
     }
-    // Si la production n'est pas déjà en cours, la démarrer
+    // Si le produit n'est pas verrouillé, lancer la production si elle n'est pas déjà en cours
     if (!this.productionInProgress[this.product.id]) {
       this.startFabrication();
     }
+  }
+
+  // Méthode appelée lorsqu'on clique explicitement pour débloquer le produit
+  unlockProduct(): void {
+    // Ici, on appelle buyProduct pour acheter 1 unité et ainsi débloquer le produit.
+    this.buyProduct(this.product.id);
+    // Une fois l'achat réussi, le callback de buyProduct mettra à jour locked et on le marque comme débloqué manuellement.
   }
 
   // Démarre la production et la barre de progression
@@ -226,6 +240,7 @@ export class ProductComponent implements OnInit {
         this.notifyBuy.emit(totalCost);
         if (this.locked) {
           this.locked = false;
+          this.unlockedManually = true;
         }
       })
       .catch((err: any) => console.error("Erreur lors de l'achat du produit :", err));

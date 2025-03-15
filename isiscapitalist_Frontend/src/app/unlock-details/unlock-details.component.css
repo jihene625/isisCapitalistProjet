@@ -130,10 +130,10 @@
 
 .status-icon {
   position: absolute;
-  left: -15px; /* Ajustez pour que la moitié soit en dehors */
-  top: 50%;
+  left: -0px; /* Ajustez pour que la moitié soit en dehors */
+  top: -5px;
   transform: translateY(-50%);
-  width: 30px;
+  width: 40px;
   height: 30px;
 }
 
@@ -144,7 +144,7 @@
 
 .unlock-product-icon {
   position: absolute;  /* Permet de sortir de .unlock-pink */
-  top: -30px;          /* Déplace l'icône de 30px vers le haut */
+  top: -25px;          /* Déplace l'icône de 30px vers le haut */
   left: 50%;           /* Centre horizontalement */
   transform: translateX(-50%);
   width: 60px;
