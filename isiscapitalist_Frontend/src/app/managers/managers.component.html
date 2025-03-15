@@ -1,0 +1,26 @@
+<div class="modal">
+  <div class="managers-header">
+    <h1 class="title">Managers make you feel better!</h1>
+  </div>
+  <div class="managers-content">
+    <div *ngFor="let manager of managers">
+      <!-- Afficher uniquement les managers non engagés -->
+      <div *ngIf="!manager.unlocked" class="managerslayout">
+        <div class="logo">
+          <img class="round" [src]="'http://localhost:3000/icones/' + manager.logo" alt="{{ manager.name }}" />
+        </div>
+        <div class="manager-info">
+          <div class="managername">{{ manager.name }}</div>
+          <div class="managercible">{{ getProductName(manager.idcible) }}</div>
+          <div class="managercost">{{ manager.seuil | number }}</div>
+        </div>
+        <div class="hire-button"
+             (click)="onHire(manager)"
+             [ngClass]="{'selectable': worldMoney >= manager.seuil}">
+          Hire!
+        </div>
+      </div>
+    </div>
+  </div>
+  <button class="close-button" (click)="onClose()">Close</button>
+</div>

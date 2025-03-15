@@ -3,6 +3,7 @@
   <div class="buy-multiplier-button" (click)="toggleQtmulti()">
     {{ qtmulti }}
   </div>
+
   <!-- Menu latéral -->
   <div class="side-menu">
     <div class="arc-bg"></div>
@@ -18,7 +19,8 @@
         <img src="assets/upgrade.png" alt="Upgrades" class="menu-icon" />
         <span>UPGRADES</span>
       </div>
-      <div class="menu-item managers">
+      <!-- Ajout de l'événement pour ouvrir l'interface Managers -->
+      <div class="menu-item managers" (click)="toggleManagers()">
         <img src="assets/Manager.png" alt="Managers" class="menu-icon" />
         <span>MANAGERS</span>
       </div>
@@ -48,7 +50,7 @@
       ></app-product>
     </div>
 
-    <!-- Interface UNLOCKS, affiché si showUnlocks = true -->
+    <!-- Interface UNLOCKS -->
     <app-unlocks
       *ngIf="showUnlocks && world"
       [products]="world.products"
@@ -60,7 +62,17 @@
   </div>
 </div>
 
-<!-- Interface detail : "Scanner UNLOCKS" etc. -->
+<!-- Interface Managers : affichée lorsque showManagers = true -->
+<app-managers
+  *ngIf="showManagers && world"
+  [managers]="world.managers"
+  [worldMoney]="world.money"
+  [products]="world.products"
+  (hireManager)="onHireManager($event)"
+  (close)="toggleManagers()"
+></app-managers>
+
+<!-- Interface détail Unlocks -->
 <app-unlock-details
   *ngIf="showProductDetail"
   [title]="detailTitle"

@@ -28,6 +28,8 @@ export class GameComponent implements OnInit {
   showProductDetail = false;     // vrai => on affiche <app-unlock-details>
   detailTitle = '';
   selectedProductPaliers: Palier[] = [];
+  showManagers: boolean = false;
+  badgeManagers: number = 0;
   constructor(private webservice: WebserviceService) {}
 
   ngOnInit(): void {
@@ -109,5 +111,32 @@ export class GameComponent implements OnInit {
       this.world.score += totalCost;
       console.log("Coût total déduit :", totalCost);
     }
+  }
+
+  toggleManagers(): void {
+    this.showManagers = !this.showManagers;
+  }
+
+// Méthode appelée lorsque le manager est engagé
+  onHireManager(manager: Palier): void {
+    this.webservice.engagerManager(this.username, manager.name)
+      .then(updatedManager => {
+        // Mettez à jour le world après l'engagement
+        return this.webservice.getWorld();
+      })
+      .then(newWorld => {
+        this.world = newWorld;
+        // Affiche un message snack-bar si besoin, etc.
+        this.popMessage(`Engagé: ${manager.name}`);
+      })
+      .catch(err => {
+        console.error("Erreur lors de l'engagement du manager :", err);
+        this.popMessage("Erreur lors de l'embauche");
+      });
+  }
+
+// Utilisation de Angular Material SnackBar
+  popMessage(message: string): void {
+    this.snackBar.open(message, "", { duration: 2000 });
   }
 }
