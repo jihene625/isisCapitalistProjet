@@ -15,7 +15,7 @@
         <img src="assets/Unlocks.png" alt="Unlock" class="menu-icon-unlock" />
         <span>UNLOCKS</span>
       </div>
-      <div class="menu-item upgrades">
+      <div class="menu-item upgrades" (click)="toggleUpgrades()">
         <img src="assets/upgrade.png" alt="Upgrades" class="menu-icon" />
         <span>UPGRADES</span>
       </div>
@@ -84,3 +84,14 @@
   (close)="onCloseDetails()"
 >
 </app-unlock-details>
+
+<app-upgrades
+  *ngIf="showUpgrades && world"
+  [title]="'UPGRADES'"
+  [cashUpgrades]="world.upgrades"
+  [patientUpgrades]="world.angelupgrades"
+  [userMoney]="world.money"
+  (buyUpgrade)="onBuyUpgrade($event)"
+  (close)="toggleUpgrades()">
+</app-upgrades>
+

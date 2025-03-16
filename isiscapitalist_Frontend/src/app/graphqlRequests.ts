@@ -111,4 +111,13 @@ export const ENGAGER_MANAGER = gql`
   }
 `;
 
+export const LANCER_PRODUCTION = gql`
+  mutation lancerProductionProduit($id: Int!) {
+    lancerProductionProduit(id: $id) {
+      id
+      timeleft
+    }
+  }
+`;
+
 

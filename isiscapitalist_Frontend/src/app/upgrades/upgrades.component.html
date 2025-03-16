@@ -1,1 +1,77 @@
-<p>upgrades works!</p>
+<div class="upgrades-overlay">
+  <!-- Barre de titre -->
+  <div class="upgrades-header">
+    <!-- Icône Upgrades en haut à gauche -->
+    <div class="upgrade-icon-container">
+      <img src="assets/upgrade.png" alt="Upgrades" class="upgrade-icon" />
+    </div>
+    <div class="upgrades-title">
+      <h2>{{ title }}</h2>
+    </div>
+    <!-- Bouton close en haut à droite -->
+    <div class="upgrades-close" (click)="onClose()">
+      <img src="assets/cross.png" alt="Close" />
+    </div>
+  </div>
+
+  <div class="upgrades-content">
+  <!-- Deux boutons pour choisir le type d'upgrades -->
+    <div class="upgrades-type-selection">
+      <!-- Bouton "Cash" -->
+      <div
+        class="upgrade-type-button"
+        [class.selected]="selectedTab === 'cash'"
+        (click)="onSelectTab('cash')"
+      >
+        <!-- Conteneur de l'image -->
+        <div class="type-image">
+          <img src="assets/Cashh.png" alt="Cash" />
+        </div>
+        <!-- La "bulle" en dessous -->
+        <div class="type-label">
+          Cash upgrades
+        </div>
+      </div>
+
+      <!-- Bouton "Patient" -->
+      <div
+        class="upgrade-type-button"
+        [class.selected]="selectedTab === 'patient'"
+        (click)="onSelectTab('patient')"
+      >
+        <div class="type-image">
+          <img src="assets/Investors.png" alt="Patient" />
+        </div>
+        <div class="type-label">
+          Patient upgrades
+        </div>
+      </div>
+    </div>
+
+  <!-- Contenu principal : liste d'upgrades -->
+
+    <div class="upgrade-grid">
+      <!-- On affiche les upgrades en fonction de l'onglet sélectionné -->
+      <div class="upgrade-card" *ngFor="let up of displayedUpgrades">
+        <!-- Partie rose avec l'icône + infos -->
+        <div class="upgrade-pink">
+          <img [src]="'http://localhost:3000/icones/' + up.logo"
+               alt="{{ up.name }}"
+               class="upgrade-img" />
+          <div class="upgrade-info">
+            <h3>{{ up.name }}</h3>
+            <!-- Affichez ce que vous voulez, ex. ratio, seuil, etc. -->
+            <p>Coût: {{ up.seuil | number }}$ - x{{ up.ratio }}</p>
+          </div>
+        </div>
+
+        <!-- Bouton BUY à côté -->
+        <div class="upgrade-buy-button"
+             [class.disabled]="!canBuy(up)"
+             (click)="onBuy(up)">
+          BUY!
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

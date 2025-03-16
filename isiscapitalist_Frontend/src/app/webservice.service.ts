@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Client, fetchExchange } from '@urql/core';
-import { GET_WORLD, ACHETER_QT_PRODUIT_MUTATION } from './graphqlRequests';
+import {GET_WORLD, ACHETER_QT_PRODUIT_MUTATION, LANCER_PRODUCTION} from './graphqlRequests';
 import { World, Product, Palier } from './models/world.model';
 import { ENGAGER_MANAGER } from './graphqlRequests';
 
@@ -58,4 +58,18 @@ export class WebserviceService {
         return response.data.engagerManager as Palier;
       });
   }
+
+  lancerProduction(product: Product): Promise<Product> {
+    return this.createClient()
+      .mutation(LANCER_PRODUCTION, { id: product.id })
+      .toPromise()
+      .then(response => {
+        if (response.error) {
+          throw new Error(response.error.message);
+        }
+        // On s'assure que la mutation retourne bien le produit mis à jour
+        return response.data.lancerProductionProduit as Product;
+      });
+  }
+
 }

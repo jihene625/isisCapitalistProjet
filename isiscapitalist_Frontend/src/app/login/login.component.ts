@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { WebserviceService } from '../webservice.service';
 import { Router } from '@angular/router';
-
+import { AuthService } from '../auth.service';
 @Component({
   selector: 'app-login',
   standalone: true,
@@ -17,7 +17,8 @@ export class LoginComponent {
 
   constructor(
     private webservice: WebserviceService,
-    private router: Router  // Pour rediriger l'utilisateur après la connexion
+    private router: Router, // Pour rediriger l'utilisateur après la connexion
+    private authService: AuthService
   ) {}
 
   onEnter() {
@@ -34,5 +35,13 @@ export class LoginComponent {
       .catch(err => {
         console.error('Erreur lors de la récupération du world:', err);
       });
+  }
+
+  login(): void {
+    if (this.username.trim().length > 0) {
+      this.authService.setUsername(this.username);
+      // Redirigez vers le composant principal (game) par exemple
+      this.router.navigate(['/game']);
+    }
   }
 }

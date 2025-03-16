@@ -85,6 +85,10 @@ export class ProductComponent implements OnInit {
     // Les autres sont verrouillés tant qu'ils n'ont pas été achetés.
     this.locked = (this.product.id !== 1 && this.product.quantite === 0);
     this.calcMaxCanBuy();
+    // Pour le rechargement, initialiser la progression en fonction de timeleft
+    if (this.product.timeleft && this.product.timeleft > 0) {
+      this.progressInitialValue = this.product.timeleft;
+    }
   }
 
   // Arrête la production et la barre de progression
@@ -132,14 +136,21 @@ export class ProductComponent implements OnInit {
     this.productionInProgress[this.product.id] = true;
     this.lastUpdateTimes[this.product.id] = Date.now();
     this.progressTime = 0; // Réinitialise la progression
-    // Lance une boucle qui met à jour la progression toutes les 100ms
+
+    // Lancer la production côté serveur
+    this.webservice.lancerProduction(this.product)
+      .catch(reason => console.log("Erreur lors du lancement de production: " + reason));
+
+    // Lance la boucle de calcul de la progression (toutes les 100ms)
     this.productionIntervals[this.product.id] = setInterval(() => {
       this.calcScore();
     }, 100);
-    // Démarre l'affichage de la barre
-    this.progressInitialValue = 0;
+
+    // Affiche la barre de progression
+    this.progressInitialValue = this.product.timeleft; // Pour gérer le reload, par exemple
     this.progressRun = true;
   }
+
 
   // Met à jour la production et la progression
   calcScore(): void {

@@ -10,6 +10,9 @@ import {ManagersComponent} from '../managers/managers.component';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatBadgeModule } from '@angular/material/badge';
+import { AuthService } from '../auth.service';
+import {UpgradesComponent} from '../upgrades/upgrades.component';
+
 @Component({
   selector: 'app-game',
   standalone: true,
@@ -25,7 +28,8 @@ import { MatBadgeModule } from '@angular/material/badge';
     ManagersComponent,
     MatSnackBarModule,
     MatButtonModule,
-    MatBadgeModule
+    MatBadgeModule,
+    UpgradesComponent
   ]
 })
 export class GameComponent implements OnInit {
@@ -39,19 +43,25 @@ export class GameComponent implements OnInit {
   showManagers: boolean = false;
   badgeManagers: number = 0;
 
-  constructor(private webservice: WebserviceService, private snackBar: MatSnackBar) {}
+  constructor(private webservice: WebserviceService,
+              private snackBar: MatSnackBar,
+              private authService: AuthService) {}
 
   ngOnInit(): void {
+    // Récupérer le pseudo depuis le service AuthService
+    this.username = this.authService.getUsername();
     this.webservice.getWorld()
       .then(w => {
         this.world = w;
-        // Si votre backend renvoie le pseudo dans world.name ou world.username
-        this.username = w.name; // ou w.username selon votre schéma
-        // Vous pouvez aussi mettre à jour la propriété "user" du service
+        // Si le pseudo est retourné par le backend sous world.username, utilisez-le.
+        // Vous pouvez également mettre à jour le service AuthService ici :
+        // this.authService.setUsername(w.username);
         this.webservice.user = this.username;
       })
       .catch(err => console.error('Erreur lors de la récupération du monde', err));
   }
+
+
 
   // Permet de faire tourner le multiplicateur dans le cycle : x1 -> x10 -> x100 -> Max -> x1, ...
   toggleQtmulti(): void {
@@ -154,17 +164,34 @@ export class GameComponent implements OnInit {
   }
 
   // Méthode pour mettre à jour le badge des managers
-  updateBadgeManagers(): void {
+  updateBadgeManagers(): number {
     if (!this.world) {
       this.badgeManagers = 0;
-      return;
+      return this.badgeManagers;
     }
     // Comptez les managers non engagés dont le coût est inférieur ou égal à l'argent disponible
-    this.badgeManagers = this.world.managers.filter(manager => !manager.unlocked && this.world!.money >= manager.seuil).length;
+    this.badgeManagers = this.world.managers.filter(
+      manager => !manager.unlocked && this.world!.money >= manager.seuil
+    ).length;
+    return this.badgeManagers;
   }
+
 
 // Utilisation de Angular Material SnackBar
   popMessage(message: string): void {
     this.snackBar.open(message, "", { duration: 2000 });
   }
+  showUpgrades: boolean = false;
+
+  toggleUpgrades(): void {
+    this.showUpgrades = !this.showUpgrades;
+  }
+
+// Méthode appelée quand on clique sur "BUY!" dans UpgradesComponent
+  onBuyUpgrade(up: Palier): void {
+    // ici vous faites l’appel GraphQL pour acheter l’upgrade
+    // ex: this.webservice.acheterCashUpgrade(this.username, up.name)
+    //     .then(...).catch(...);
+  }
+
 }
