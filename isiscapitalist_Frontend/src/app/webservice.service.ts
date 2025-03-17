@@ -1,6 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Client, fetchExchange } from '@urql/core';
-import {GET_WORLD, ACHETER_QT_PRODUIT_MUTATION, LANCER_PRODUCTION} from './graphqlRequests';
+import {
+  GET_WORLD,
+  ACHETER_QT_PRODUIT_MUTATION,
+  LANCER_PRODUCTION,
+  RESET_WORLD,
+  ACHETER_ANGEL_UPGRADE, ACHETER_CASH_UPGRADE
+} from './graphqlRequests';
 import { World, Product, Palier } from './models/world.model';
 import { ENGAGER_MANAGER } from './graphqlRequests';
 
@@ -72,4 +78,39 @@ export class WebserviceService {
       });
   }
 
+  acheterCashUpgrade(user: string, name: string): Promise<Palier> {
+    return this.createClient()
+      .mutation(ACHETER_CASH_UPGRADE, { user, name })
+      .toPromise()
+      .then(response => {
+        if (response.error) {
+          throw new Error(response.error.message);
+        }
+        return response.data.acheterCashUpgrade as Palier;
+      });
+  }
+
+  acheterAngelUpgrade(user: string, name: string): Promise<Palier> {
+    return this.createClient()
+      .mutation(ACHETER_ANGEL_UPGRADE, { user, name })
+      .toPromise()
+      .then(response => {
+        if (response.error) {
+          throw new Error(response.error.message);
+        }
+        return response.data.acheterAngelUpgrade as Palier;
+      });
+  }
+
+  resetWorld(user: string): Promise<World> {
+    return this.createClient()
+      .mutation(RESET_WORLD, { user })
+      .toPromise()
+      .then(response => {
+        if (response.error) {
+          throw new Error(response.error.message);
+        }
+        return response.data.resetWorld as World;
+      });
+  }
 }

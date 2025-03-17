@@ -2,6 +2,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Palier, Product } from '../models/world.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { WebserviceService } from '../webservice.service';
 
 @Component({
   selector: 'app-managers',
@@ -21,13 +22,14 @@ export class ManagersComponent {
   @Input() products: Product[] = [];
   // Pour gérer une éventuelle autre ressource, par exemple des patients
   @Input() worldPatients: number = 0;
+  @Input() username: string = '';
 
   // Événement émis quand on veut fermer l’interface
   @Output() close = new EventEmitter<void>();
   // Événement émis quand on clique sur "Hire" pour engager un manager
   @Output() hireManager = new EventEmitter<Palier>();
 
-  constructor(private snackBar: MatSnackBar) {}
+  constructor(private webservice: WebserviceService, private snackBar: MatSnackBar) {}
 
   // Vérifie si le joueur peut engager le manager
   canHireManager(m: Palier): boolean {
@@ -40,9 +42,24 @@ export class ManagersComponent {
       this.popMessage("Pas assez de ressources pour engager ce manager.");
       return;
     }
-    this.hireManager.emit(m);
-    this.popMessage(`Engagé: ${m.name}`);
+    // Appel de la mutation pour engager le manager en passant le nom de manager.
+    // On utilise this.username pour transmettre le pseudo de l'utilisateur.
+    this.webservice.engagerManager(this.username, m.name)
+      .then(updatedManager => {
+        // Si nécessaire, on peut ici appeler getWorld() pour mettre à jour l'état global
+        return this.webservice.getWorld();
+      })
+      .then(newWorld => {
+        // Émettre l'événement ou mettre à jour le monde dans le composant parent
+        this.hireManager.emit(m);
+        this.popMessage(`Engagé: ${m.name}`);
+      })
+      .catch(error => {
+        console.error("Erreur lors de l'engagement du manager:", error);
+        this.popMessage("Erreur lors de l'embauche");
+      });
   }
+
 
   // Méthode pour fermer l'interface managers
   onClose(): void {
