@@ -3,7 +3,7 @@ import { RatioType } from './graphql';
 export const origworld = {
   name: 'A Nice World 2',
   logo: 'Medecin.png',
-  money: 0,
+  money: 100000,
   score: 0,
   totalangels: 0,
   activeangels: 0,

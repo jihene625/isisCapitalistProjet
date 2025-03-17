@@ -33,7 +33,10 @@ export class ManagersComponent {
 
   // Vérifie si le joueur peut engager le manager
   canHireManager(m: Palier): boolean {
-    return (this.worldMoney >= m.seuil) ;
+    // Rechercher le produit associé au manager (idcible correspond à l'id du produit)
+    const product = this.products.find(p => p.id === m.idcible);
+    const isLocked = product ? (product.id !== 1 && product.quantite === 0) : true;
+    return product !== undefined && !isLocked && !m.unlocked && (this.worldMoney >= m.seuil);
   }
 
   // Méthode appelée quand on clique sur le bouton Hire

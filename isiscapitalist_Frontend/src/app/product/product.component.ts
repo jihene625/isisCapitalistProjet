@@ -160,22 +160,27 @@ export class ProductComponent implements OnInit {
     this.progressTime += elapsed;
 
     if (this.progressTime >= this.product.vitesse) {
-      // Forcer la barre à 100%
+      // Forcer la progression à 100%
       this.progressTime = this.product.vitesse;
-      const qt = 1; // Nombre d'unités produites
+      const qt = 1; // Production d'une unité
       this.notifyProduction.emit({ p: this.product, qt: qt });
 
-      // Après un court délai pour laisser afficher 100%
-      setTimeout(() => {
-        this.stopFabrication();
-        this.stopProduction();
-        // Si le manager est débloqué, relancer immédiatement la production
-        if (this.product.managerUnlocked) {
-          this.startFabrication();
-        }
-      }, 90);
+      // Si le manager est débloqué, réinitialiser la progression et continuer
+      if (this.product.managerUnlocked) {
+        // Réinitialise la progression pour relancer immédiatement la production
+        this.progressTime = 0;
+        // La boucle setInterval continue de tourner
+      } else {
+        // Sinon, arrêter la production après un court délai pour laisser afficher 100%
+        setTimeout(() => {
+          this.stopFabrication();
+          this.stopProduction();
+        }, 90); // Délai ajustable
+      }
     }
   }
+
+
 
 
   // Arrête la production en cours
