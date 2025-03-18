@@ -10,6 +10,7 @@ import {
 import { World, Product, Palier } from './models/world.model';
 import { ENGAGER_MANAGER } from './graphqlRequests';
 
+
 @Injectable({
   providedIn: 'root',
 })
@@ -32,8 +33,10 @@ export class WebserviceService {
         if (response.error) {
           throw new Error(response.error.message);
         }
-        return response.data.getWorld;
+       // console.log(response)
+        return response.data.getWorld; 
       });
+      
   }
 
   // Méthode d'achat du produit
@@ -65,9 +68,9 @@ export class WebserviceService {
       });
   }
 
-  lancerProduction(product: Product): Promise<Product> {
+  lancerProduction(user: string, product: Product): Promise<Product> {
     return this.createClient()
-      .mutation(LANCER_PRODUCTION, { id: product.id })
+      .mutation(LANCER_PRODUCTION, { user,id: product.id })
       .toPromise()
       .then(response => {
         if (response.error) {

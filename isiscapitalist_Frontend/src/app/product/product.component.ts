@@ -138,7 +138,7 @@ export class ProductComponent implements OnInit {
     this.progressTime = 0; // Réinitialise la progression
 
     // Lancer la production côté serveur
-    this.webservice.lancerProduction(this.product)
+    this.webservice.lancerProduction(this.webservice.user,this.product)
       .catch(reason => console.log("Erreur lors du lancement de production: " + reason));
 
     // Lance la boucle de calcul de la progression (toutes les 100ms)
@@ -251,7 +251,7 @@ export class ProductComponent implements OnInit {
       quantite = this.getQuantiteToBuy();
     }
     console.log("Tentative d'achat: produit", productId, "quantité", quantite, "money", this.money);
-    this.webservice.acheterQtProduit('user', productId, quantite)
+    this.webservice.acheterQtProduit(this.webservice.user, productId, quantite)
       .then((updatedProduct: Product) => {
         console.log("Produit acheté :", updatedProduct);
         return this.webservice.getWorld();

@@ -6,6 +6,7 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { GraphQLModule } from '@nestjs/graphql';
 import {GraphQlResolver} from './resolver';
 
+
 @Module({
   imports: [
     GraphQLModule.forRoot<ApolloDriverConfig>({

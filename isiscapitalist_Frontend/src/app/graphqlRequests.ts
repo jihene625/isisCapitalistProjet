@@ -112,8 +112,8 @@ export const ENGAGER_MANAGER = gql`
 `;
 
 export const LANCER_PRODUCTION = gql`
-  mutation lancerProductionProduit($id: Int!) {
-    lancerProductionProduit(id: $id) {
+  mutation lancerProductionProduit($user:String!,$id: Int!) {
+    lancerProductionProduit(user:$user,id: $id) {
       id
       timeleft
     }

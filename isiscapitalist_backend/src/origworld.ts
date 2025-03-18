@@ -3,7 +3,7 @@ import { RatioType } from './graphql';
 export const origworld = {
   name: 'A Nice World 2',
   logo: 'Medecin.png',
-  money: 100000,
+  money: 0,
   score: 0,
   totalangels: 0,
   activeangels: 0,
@@ -17,7 +17,7 @@ export const origworld = {
       cout: 4,
       croissance: 1.07,
       revenu: 1,
-      vitesse: 500,
+      vitesse: 125,
       quantite: 1,
       timeleft: 0,
       managerUnlocked: false,
@@ -352,7 +352,7 @@ export const origworld = {
   upgrades: [
     {
       name: 'Scanner Supersonique',
-      logo: 'icones/scanner.jpg',
+      logo: 'scanner.png',
       seuil: 1000,
       idcible: 1,
       ratio: 3,
@@ -361,7 +361,7 @@ export const origworld = {
     },
     {
       name: 'Chirurgie Turbo',
-      logo: 'icones/table.jpg',
+      logo: 'operation.png',
       seuil: 15000,
       idcible: 2,
       ratio: 3,
@@ -370,7 +370,7 @@ export const origworld = {
     },
     {
       name: 'Confort Ciel',
-      logo: 'lit.jpg',
+      logo: 'lit medicalisé.png',
       seuil: 30000,
       idcible: 3,
       ratio: 3,
@@ -379,7 +379,7 @@ export const origworld = {
     },
     {
       name: 'Vitesse Galactique',
-      logo: 'icones/centrifugeuse.jpg',
+      logo: 'laboratoire.png',
       seuil: 50000,
       idcible: 4,
       ratio: 3,
@@ -388,7 +388,7 @@ export const origworld = {
     },
     {
       name: 'Choc Maître',
-      logo: 'icones/défibrillateur.jpg',
+      logo: 'urgence.png',
       seuil: 100000,
       idcible: 5,
       ratio: 3,
@@ -397,7 +397,7 @@ export const origworld = {
     },
     {
       name: 'Doseur Précis Plus',
-      logo: 'icones/robot.jpg',
+      logo: 'pharmacie.png',
       seuil: 250000,
       idcible: 6,
       ratio: 3,
@@ -406,7 +406,7 @@ export const origworld = {
     },
     {
       name: 'Boost Hyper',
-      logo: 'icones/all.jpg',
+      logo: 'cash.png',
       seuil: 1000000,
       idcible: 0,
       ratio: 3,
@@ -417,7 +417,7 @@ export const origworld = {
   angelupgrades: [
     {
       name: 'Patient modèle',
-      logo: 'icones/patient.png',
+      logo: 'investors.png',
       seuil: 10,
       idcible: 0,
       ratio: 3,
@@ -426,7 +426,7 @@ export const origworld = {
     },
     {
       name: 'Patient Premium',
-      logo: 'icones/patient.png',
+      logo: 'investors.png',
       seuil: 100000,
       idcible: -1,
       ratio: 2,
@@ -435,7 +435,7 @@ export const origworld = {
     },
     {
       name: 'Zéro douleur',
-      logo: 'icones/patient.png',
+      logo: 'investors.png',
       seuil: 1000000,
       idcible: -1,
       ratio: 2,
@@ -444,7 +444,7 @@ export const origworld = {
     },
     {
       name: 'Patient VIP',
-      logo: 'icones/patient.png',
+      logo: 'investors.png',
       seuil: 10000000,
       idcible: -1,
       ratio: 5,
@@ -453,7 +453,7 @@ export const origworld = {
     },
     {
       name: 'Échange de lit',
-      logo: 'icones/lit.png',
+      logo: 'lit medicalisé.png',
       seuil: 25000000,
       idcible: 3,
       ratio: 10,
@@ -462,7 +462,7 @@ export const origworld = {
     },
     {
       name: 'Échange de table d\'opération',
-      logo: 'icones/table.png',
+      logo: 'operation.png',
       seuil: 25000000,
       idcible: 2,
       ratio: 10,
@@ -471,7 +471,7 @@ export const origworld = {
     },
     {
       name: 'Échange de centrifugeuse',
-      logo: 'centrifugeuse.png',
+      logo: 'laboratoire.png',
       seuil: 25000000,
       idcible: 4,
       ratio: 10,
@@ -480,7 +480,7 @@ export const origworld = {
     },
     {
       name: 'Échange de lit',
-      logo: 'lit.png',
+      logo: 'lit medicalisé.png',
       seuil: 250000000,
       idcible: 3,
       ratio: 50,
