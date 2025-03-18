@@ -20,6 +20,7 @@ import { MyProgressBarComponent, Orientation } from '../my-progress-bar/my-progr
 })
 export class ProductComponent implements OnInit {
   @Input() product!: Product; // Le produit transmis par le parent
+  @Input() world!: World; // Le produit transmis par le parent
 
   // Propriétés pour la barre de progression
   progressInitialValue: number = 0;

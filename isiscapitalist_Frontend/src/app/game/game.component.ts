@@ -43,6 +43,7 @@ export class GameComponent implements OnInit {
   showManagers: boolean = false;
   badgeManagers: number = 0;
 
+
   constructor(private webservice: WebserviceService,
               private snackBar: MatSnackBar,
               private authService: AuthService) {}

@@ -45,6 +45,7 @@
       <app-product
         *ngFor="let product of world.products"
         [product]="product"
+        [world]="world"
         [qtmulti]="qtmulti"
         [money]="world.money"
         (notifyProduction)="onProductionDone($event)"

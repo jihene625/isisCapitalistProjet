@@ -85,7 +85,7 @@ export class UpgradesComponent {
     }
 
     if (this.selectedTab === 'cash') {
-      this.webservice.acheterCashUpgrade(this.username, up.name)
+      this.webservice.acheterCashUpgrade(this.webservice.user, up.name)
         .then(updatedUpgrade => {
           this.popMessage(`Upgrade ${up.name} purchased successfully`);
           return this.webservice.getWorld();

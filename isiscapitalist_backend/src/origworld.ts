@@ -17,7 +17,7 @@ export const origworld = {
       cout: 4,
       croissance: 1.07,
       revenu: 1,
-      vitesse: 125,
+      vitesse: 500,
       quantite: 1,
       timeleft: 0,
       managerUnlocked: false,
